@@ -1,5 +1,6 @@
 import streamlit as st
 import datetime
+import random
 import pandas as pd
 from PIL import Image
 
@@ -35,7 +36,10 @@ if "pickup_requests" not in st.session_state:
         }
     ]
 
-# EcoPoints conversion rates per kg
+if "redeemed_coupons" not in st.session_state:
+    st.session_state.redeemed_coupons = []
+
+# Rate card (EcoPoints per kg)
 RATES = {
     "Plastic": 20,
     "Paper & Cardboard": 10,
@@ -47,34 +51,35 @@ RATES = {
 
 # ----------------- Sidebar Navigation -----------------
 st.sidebar.title("🌿 Waste2Worth")
-st.sidebar.markdown(f"User: **{st.session_state.username}**")
-st.sidebar.metric(label="Current EcoPoints", value=f"{st.session_state.ecopoints} pts")
+st.sidebar.write(f"Logged in: **{st.session_state.username}**")
+st.sidebar.metric(label="Your EcoPoints", value=f"{st.session_state.ecopoints} pts")
 
 nav_choice = st.sidebar.radio(
-    "Go to",
+    "Navigation",
     [
         "📊 Dashboard",
-        "📸 AI Waste Identifier & Logger",
+        "📸 AI Waste Scanner & Logger",
         "🚚 Doorstep Pickup",
         "🎁 Rewards Store",
-        "🏆 Community Leaderboard"
+        "🏆 Community Leaderboard",
+        "💡 Segregation Guide"
     ]
 )
 
 st.sidebar.markdown("---")
-st.sidebar.caption("Waste2Worth • Circular Economy Initiative")
+st.sidebar.caption("Waste2Worth • Circular Economy Platform")
 
 # ----------------- 1. Dashboard -----------------
 if nav_choice == "📊 Dashboard":
     st.title("♻️ Community Impact Dashboard")
-    st.markdown("Track your recycling footprint, redeem perks, and manage your contributions.")
+    st.write("Track your recycling contributions, view environmental impact, and monitor scheduled pickups.")
 
+    total_dropoffs = len(st.session_state.waste_history)
     col1, col2, col3, col4 = st.columns(4)
-    total_recycled_items = len(st.session_state.waste_history)
     col1.metric("Available Points", f"{st.session_state.ecopoints} pts")
-    col2.metric("Total Drop-offs", total_recycled_items)
-    col3.metric("Pickups Requested", len(st.session_state.pickup_requests))
-    col4.metric("Carbon Offset (Est.)", f"{total_recycled_items * 1.8:.1f} kg CO₂")
+    col2.metric("Total Drop-offs", total_dropoffs)
+    col3.metric("Active Pickups", len(st.session_state.pickup_requests))
+    col4.metric("CO₂ Offset (Est.)", f"{total_dropoffs * 1.8:.1f} kg")
 
     st.markdown("---")
     st.subheader("📜 Recent Drop-off History")
@@ -82,113 +87,176 @@ if nav_choice == "📊 Dashboard":
         df_history = pd.DataFrame(st.session_state.waste_history)
         st.dataframe(df_history, use_container_width=True)
     else:
-        st.info("No recycling logs recorded yet.")
+        st.info("No recycling drop-offs recorded yet.")
 
-# ----------------- 2. AI Waste Identifier & Logger -----------------
-elif nav_choice == "📸 AI Waste Identifier & Logger":
-    st.title("📸 Classify & Log Recyclable Waste")
-    st.write("Upload an image of your item or select the waste category manually to calculate points.")
+    if st.session_state.redeemed_coupons:
+        st.subheader("🎟️ Your Redeemed Coupons")
+        df_coupons = pd.DataFrame(st.session_state.redeemed_coupons)
+        st.dataframe(df_coupons, use_container_width=True)
 
-    uploaded_file = st.file_uploader("Upload an item picture (optional)", type=["jpg", "jpeg", "png"])
-    if uploaded_file is not None:
-        image = Image.open(uploaded_file)
-        st.image(image, caption="Analyzed Image", width=250)
-        st.success("Item identified: Recyclable Material ready for confirmation.")
+# ----------------- 2. AI Waste Scanner & Logger -----------------
+elif nav_choice == "📸 AI Waste Scanner & Logger":
+    st.title("📸 AI Waste Scanner & Logger")
+    st.write("Take a snapshot or upload an image to identify recyclables and calculate reward points.")
+
+    tab1, tab2 = st.tabs(["📁 Upload Image", "📷 Use Camera"])
+    uploaded_image = None
+
+    with tab1:
+        file_input = st.file_uploader("Upload waste picture", type=["jpg", "jpeg", "png"])
+        if file_input:
+            uploaded_image = Image.open(file_input)
+
+    with tab2:
+        cam_input = st.camera_input("Take a photo of recyclable item")
+        if cam_input:
+            uploaded_image = Image.open(cam_input)
+
+    detected_category = "Plastic"
+    if uploaded_image:
+        st.image(uploaded_image, caption="Uploaded Item", width=260)
+        # Mock detection preview
+        detected_category = random.choice(["Plastic", "Paper & Cardboard", "Metal / Aluminium", "Glass"])
+        st.success(f"🔍 AI Detection: Detected **{detected_category}** (Confidence: 94.2%)")
+
+    st.markdown("---")
+    st.subheader("Confirm Weight & Claim Points")
 
     with st.form("waste_log_form"):
-        selected_category = st.selectbox("Waste Category", list(RATES.keys()))
-        input_weight = st.number_input("Estimated Weight (in kg)", min_value=0.1, max_value=250.0, step=0.5, value=1.0)
+        selected_category = st.selectbox(
+            "Waste Category",
+            list(RATES.keys()),
+            index=list(RATES.keys()).index(detected_category) if detected_category in RATES else 0
+        )
+        input_weight = st.number_input("Estimated Weight (in kg)", min_value=0.1, max_value=200.0, step=0.5, value=1.0)
         
         calculated_points = int(input_weight * RATES[selected_category])
-        st.info(f"Potential Reward: **{calculated_points} EcoPoints** (@ {RATES[selected_category]} pts/kg)")
-        
-        submit_log = st.form_submit_button("Confirm & Add to EcoPoints")
+        st.info(f"Points to earn: **{calculated_points} EcoPoints** (@ {RATES[selected_category]} pts/kg)")
+
+        submit_log = st.form_submit_button("Confirm & Add EcoPoints")
         if submit_log:
             st.session_state.ecopoints += calculated_points
-            entry = {
+            st.session_state.waste_history.append({
                 "Item": selected_category,
                 "Weight": f"{input_weight} kg",
                 "EcoPoints": calculated_points,
                 "Date": str(datetime.date.today())
-            }
-            st.session_state.waste_history.append(entry)
-            st.success(f"Success! {input_weight} kg of {selected_category} logged. You earned {calculated_points} EcoPoints.")
+            })
+            st.success(f"Logged {input_weight} kg of {selected_category}! You earned **{calculated_points} EcoPoints**.")
             st.rerun()
 
 # ----------------- 3. Doorstep Pickup -----------------
 elif nav_choice == "🚚 Doorstep Pickup":
-    st.title("🚚 Doorstep Waste Collection")
-    st.write("Schedule a pickup for bulk items right from your house or office.")
+    st.title("🚚 Schedule Doorstep Collection")
+    st.write("Book a scheduled pickup for bulk recyclables right from your location.")
 
-    with st.form("pickup_scheduling_form"):
-        street_address = st.text_area("Pickup Location / Address", placeholder="Street name, door no., landmark")
-        waste_types = st.multiselect("Select Categories", list(RATES.keys()), default=["Plastic", "Paper & Cardboard"])
-        selected_date = st.date_input("Scheduled Date", min_value=datetime.date.today())
-        phone_num = st.text_input("Mobile Number", placeholder="+91 9876543210")
-        notes = st.text_input("Special Access Instructions (Optional)")
-        
-        submit_pickup = st.form_submit_button("Confirm Pickup Request")
-        if submit_pickup:
-            if not street_address or not phone_num:
-                st.error("Please supply both a valid pickup address and contact number.")
+    with st.form("pickup_form"):
+        pickup_address = st.text_area("Pickup Address", placeholder="Apartment / Door No., Street, City")
+        waste_items = st.multiselect("Types of Waste", list(RATES.keys()), default=["Plastic", "Paper & Cardboard"])
+        pickup_date = st.date_input("Preferred Date", min_value=datetime.date.today())
+        phone = st.text_input("Contact Mobile", placeholder="+91 9876543210")
+        notes = st.text_input("Special Notes (Optional)")
+
+        submit_booking = st.form_submit_button("Book Pickup")
+        if submit_booking:
+            if not pickup_address or not phone:
+                st.error("Please enter both the address and phone number.")
             else:
-                new_pickup_id = f"W2W-{len(st.session_state.pickup_requests) + 8042}"
+                new_id = f"W2W-{random.randint(1000, 9999)}"
                 st.session_state.pickup_requests.append({
-                    "Pickup ID": new_pickup_id,
-                    "Address": street_address,
-                    "Items": ", ".join(waste_types),
-                    "Date": str(selected_date),
-                    "Contact": phone_num,
+                    "Pickup ID": new_id,
+                    "Address": pickup_address,
+                    "Items": ", ".join(waste_items),
+                    "Date": str(pickup_date),
+                    "Contact": phone,
                     "Status": "Confirmed"
                 })
-                st.success(f"Pickup booked successfully! Tracking ID: **{new_pickup_id}**")
+                st.success(f"Pickup booked! Your Tracking ID is **{new_id}**.")
                 st.rerun()
 
     if st.session_state.pickup_requests:
         st.markdown("---")
-        st.subheader("Active Pickup Requests")
+        st.subheader("Your Pickup Status")
         st.dataframe(pd.DataFrame(st.session_state.pickup_requests), use_container_width=True)
 
 # ----------------- 4. Rewards Store -----------------
 elif nav_choice == "🎁 Rewards Store":
-    st.title("🎁 EcoPoints Redemption Hub")
-    st.write(f"Spend your EcoPoints on green deals. Balance: **{st.session_state.ecopoints} pts**")
+    st.title("🎁 EcoPoints Rewards Store")
+    st.write(f"Spend points on vouchers and eco-friendly perks. Balance: **{st.session_state.ecopoints} EcoPoints**")
 
-    rewards_catalog = [
-        {"title": "Free Cafe Beverage", "cost": 60, "details": "1 complimentary brew at partner cafes."},
-        {"title": "Supermarket Discount Coupon", "cost": 100, "details": "Get ₹100 off on fresh organic groceries."},
-        {"title": "Public Metro/Bus Pass Pass-Back", "cost": 140, "details": "25% rebate voucher for public transit."},
-        {"title": "Adopt / Plant a Sapling", "cost": 200, "details": "Plant an indigenous sapling with live GPS tracking."}
+    rewards_list = [
+        {"title": "Free Coffee Coupon", "cost": 50, "desc": "1 free artisanal beverage at partner cafes."},
+        {"title": "Organic Grocery Coupon (₹100 Off)", "cost": 100, "desc": "Redeemable at local organic partner stores."},
+        {"title": "Metro / Transit Recharge (₹150)", "cost": 150, "desc": "Recharge voucher for city metro or public bus pass."},
+        {"title": "Plant an Urban Sapling", "cost": 200, "desc": "Sponsor a tree sapling planted with your name tag."}
     ]
 
-    col_x, col_y = st.columns(2)
-    for idx, reward in enumerate(rewards_catalog):
-        target_col = col_x if idx % 2 == 0 else col_y
-        with target_col:
+    col_a, col_b = st.columns(2)
+    for idx, reward in enumerate(rewards_list):
+        card = col_a if idx % 2 == 0 else col_b
+        with card:
             st.markdown(f"### {reward['title']}")
-            st.write(reward['details'])
+            st.write(reward["desc"])
             st.caption(f"Cost: **{reward['cost']} EcoPoints**")
             
-            if st.button(f"Redeem Coupon ({reward['cost']} pts)", key=f"btn_reward_{idx}"):
-                if st.session_state.ecopoints >= reward['cost']:
-                    st.session_state.ecopoints -= reward['cost']
-                    st.success(f"Success! {reward['title']} unlocked. Claim code: `ECO-{idx}92X`")
+            if st.button(f"Redeem ({reward['cost']} pts)", key=f"rwd_{idx}"):
+                if st.session_state.ecopoints >= reward["cost"]:
+                    st.session_state.ecopoints -= reward["cost"]
+                    voucher_code = f"ECO-{random.randint(10000, 99999)}"
+                    st.session_state.redeemed_coupons.append({
+                        "Reward": reward["title"],
+                        "Coupon Code": voucher_code,
+                        "Date": str(datetime.date.today())
+                    })
+                    st.success(f"Redeemed! Your code: **{voucher_code}**")
                     st.rerun()
                 else:
-                    st.error("You need more EcoPoints to unlock this benefit.")
-            st.markdown("---")
+                    st.error("Insufficient EcoPoints.")
+            st.divider()
 
-# ----------------- 5. Leaderboard -----------------
+# ----------------- 5. Community Leaderboard -----------------
 elif nav_choice == "🏆 Community Leaderboard":
-    st.title("🏆 Community Eco Heroes")
-    st.write("Top recyclers contributing to sustainable neighborhoods this month.")
+    st.title("🏆 Community Leaderboard")
+    st.write("Recognizing community recyclers leading the charge for zero waste.")
 
-    leaderboard_data = [
-        {"Rank": "🥇 1", "Recycler": "Aarav Sharma", "Waste Diverted": "42.5 kg", "EcoPoints": 850},
-        {"Rank": "🥈 2", "Recycler": "Priya Raman", "Waste Diverted": "36.0 kg", "EcoPoints": 720},
-        {"Rank": "🥉 3", "Recycler": st.session_state.username, "Waste Diverted": "28.5 kg", "EcoPoints": st.session_state.ecopoints},
-        {"Rank": "4", "Recycler": "Karthik Raj", "Waste Diverted": "19.0 kg", "EcoPoints": 380},
-        {"Rank": "5", "Recycler": "Divya N", "Waste Diverted": "14.2 kg", "EcoPoints": 290}
+    leaderboard = [
+        {"Rank": "🥇 1", "Recycler": "Aarav Sharma", "Diverted Waste": "44.0 kg", "EcoPoints": 880},
+        {"Rank": "🥈 2", "Recycler": "Priya Raman", "Diverted Waste": "38.5 kg", "EcoPoints": 770},
+        {"Rank": "🥉 3", "Recycler": st.session_state.username, "Diverted Waste": "28.0 kg", "EcoPoints": st.session_state.ecopoints},
+        {"Rank": "4", "Recycler": "Karthik Raj", "Diverted Waste": "18.5 kg", "EcoPoints": 370},
+        {"Rank": "5", "Recycler": "Divya N", "Diverted Waste": "12.0 kg", "EcoPoints": 240}
     ]
+    st.table(pd.DataFrame(leaderboard))
 
-    st.table(pd.DataFrame(leaderboard_data))
+# ----------------- 6. Segregation Guide -----------------
+elif nav_choice == "💡 Segregation Guide":
+    st.title("💡 Waste Segregation & Disposal Guide")
+    st.write("Understand which bin each household material belongs to.")
+
+    g_col1, g_col2, g_col3 = st.columns(3)
+    with g_col1:
+        st.subheader("🟢 Wet / Organic")
+        st.markdown("""
+        * Fruit and vegetable peels
+        * Leftover food & tea grounds
+        * Garden leaves & flowers
+        * Soiled paper napkins
+        """)
+
+    with g_col2:
+        st.subheader("🔵 Dry / Recyclable")
+        st.markdown("""
+        * Clean plastic bottles & containers
+        * Newspapers, carton boxes, paper
+        * Metal cans & foil wrappers
+        * Glass bottles & jars
+        """)
+
+    with g_col3:
+        st.subheader("🔴 Hazardous / E-Waste")
+        st.markdown("""
+        * Batteries & power cables
+        * Broken thermometers & chemicals
+        * Old electronics & phone parts
+        * Sanitary waste (wrapped safely)
+        """)
