@@ -11,38 +11,36 @@ st.set_page_config(
     layout="wide"
 )
 
-# ----------------- High-Contrast Eco Theme & Typography CSS -----------------
+# ----------------- Strict High-Contrast Theme & Sidebar CSS -----------------
 st.markdown(
     """
     <style>
-    /* Full Application Background */
+    /* Full App Background */
     .stApp {
-        background: linear-gradient(135deg, #f4faf6 0%, #e2f1e7 50%, #d4ebd9 100%);
+        background: linear-gradient(135deg, #f4faf6 0%, #e8f5ec 50%, #d8ebd9 100%);
         background-attachment: fixed;
     }
 
-    /* Force high contrast dark text across all body elements */
-    .stApp, .stApp p, .stApp span, .stApp label, .stApp div {
+    /* Main Area Typography */
+    .stApp, .stApp p, .stApp span, .stApp label {
         color: #172a1e !important;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
-    /* Crisp Header Typography */
     h1, h2, h3, h4, h5, h6 {
         color: #0d381e !important;
         font-weight: 700 !important;
     }
 
-    /* Clean Card Wrappers for Forms, Tables & Containers */
+    /* Cards / Containers in Main Screen */
     [data-testid="stForm"], [data-testid="stMetric"], .stTable {
-        background-color: rgba(255, 255, 255, 0.92) !important;
+        background-color: rgba(255, 255, 255, 0.95) !important;
         padding: 18px !important;
         border-radius: 12px !important;
         box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05) !important;
         border: 1px solid #c9e4d1 !important;
     }
 
-    /* Metrics Styling */
     div[data-testid="stMetricValue"] {
         color: #1b6338 !important;
         font-weight: 800 !important;
@@ -52,16 +50,64 @@ st.markdown(
         font-weight: 600 !important;
     }
 
-    /* Sidebar Styling with High Contrast White-on-Dark */
+    /* ---------------------------------------------------- */
+    /* LEFT SIDEBAR HIGH-SPECIFICITY OVERRIDES             */
+    /* ---------------------------------------------------- */
     [data-testid="stSidebar"] {
-        background-color: #153322 !important;
+        background-color: #0c2819 !important;
     }
+
+    /* Force all text tags, markdown spans, and labels to pure white */
     [data-testid="stSidebar"] * {
-        color: #f0f7f2 !important;
+        color: #ffffff !important;
     }
-    [data-testid="stSidebar"] .stRadio label {
-        color: #e5f5ea !important;
-        font-weight: 500 !important;
+
+    /* Sidebar title and headings */
+    [data-testid="stSidebar"] h1,
+    [data-testid="stSidebar"] h2,
+    [data-testid="stSidebar"] h3 {
+        color: #ffffff !important;
+        font-weight: 800 !important;
+    }
+
+    /* Sidebar Radio Button Label Containers */
+    [data-testid="stSidebar"] div[role="radiogroup"] label {
+        background: rgba(255, 255, 255, 0.12) !important;
+        padding: 10px 14px !important;
+        border-radius: 8px !important;
+        margin-bottom: 8px !important;
+        border: 1px solid rgba(255, 255, 255, 0.25) !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+
+    [data-testid="stSidebar"] div[role="radiogroup"] label:hover {
+        background: rgba(255, 255, 255, 0.22) !important;
+    }
+
+    /* Radio Label Inner Text Nodes */
+    [data-testid="stSidebar"] div[role="radiogroup"] label p,
+    [data-testid="stSidebar"] div[role="radiogroup"] label span,
+    [data-testid="stSidebar"] div[role="radiogroup"] label div {
+        color: #ffffff !important;
+        font-weight: 600 !important;
+        font-size: 15px !important;
+    }
+
+    /* Sidebar Metric Card Customization */
+    [data-testid="stSidebar"] [data-testid="stMetric"] {
+        background-color: #ffffff !important;
+        border-radius: 12px !important;
+        padding: 14px !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stMetric"] [data-testid="stMetricLabel"] * {
+        color: #2d3748 !important;
+        font-weight: 600 !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stMetric"] [data-testid="stMetricValue"] * {
+        color: #0f4d2a !important;
+        font-weight: 800 !important;
+        font-size: 32px !important;
     }
 
     /* Primary Interactive Buttons */
@@ -72,19 +118,10 @@ st.markdown(
         border-radius: 8px !important;
         border: none !important;
         padding: 8px 18px !important;
-        box-shadow: 0 2px 6px rgba(36, 109, 65, 0.25) !important;
     }
     .stButton>button:hover {
         background-color: #184c2d !important;
         color: #ffffff !important;
-    }
-
-    /* Form input fields & dropdowns */
-    input, select, textarea, div[data-baseweb="select"] {
-        background-color: #ffffff !important;
-        color: #172a1e !important;
-        border: 1px solid #b6dcc0 !important;
-        border-radius: 6px !important;
     }
     </style>
     """,
@@ -165,14 +202,15 @@ RECYCLING_CENTERS = [
     }
 ]
 
-# ----------------- Sidebar Navigation -----------------
-st.sidebar.title("🌿 Waste2Worth")
-st.sidebar.write(f"Logged in: **{st.session_state.username}**")
+# ----------------- Left Sidebar Navigation -----------------
+st.sidebar.markdown("## 🌿 Waste2Worth")
+st.sidebar.markdown(f"**Logged in:** {st.session_state.username}")
 st.sidebar.metric(label="Your EcoPoints", value=f"{st.session_state.ecopoints} pts")
 
 nav_choice = st.sidebar.radio(
     "Navigation",
     [
+        "🏠 Home",
         "📊 Dashboard",
         "📸 AI Waste Scanner & Classifier",
         "📍 Nearby Collection Centers (Map)",
@@ -185,8 +223,47 @@ nav_choice = st.sidebar.radio(
 st.sidebar.markdown("---")
 st.sidebar.caption("Waste2Worth • Circular Economy Platform")
 
+# ----------------- 0. Home Screen -----------------
+if nav_choice == "🏠 Home":
+    st.title("🌱 Welcome to Waste2Worth")
+    st.subheader("Transforming Everyday Waste into Value, Rewards, and Community Impact")
+    
+    st.markdown("""
+    Waste2Worth bridges everyday households with authorized circular recycling streams. 
+    Classify items using on-device computer vision, pinpoint authorized drop-offs, schedule verified pickups, 
+    and exchange your EcoPoints for real rewards.
+    """)
+
+    # Quick Highlights Banner
+    col_h1, col_h2, col_h3 = st.columns(3)
+    with col_h1:
+        st.markdown("### 📸 Scan & Identify")
+        st.write("Use instant AI image recognition to identify waste materials and view their coin redemption value per kg.")
+    with col_h2:
+        st.markdown("### 📍 Drop or Pickup")
+        st.write("Find nearby certified scrap and drop-off hubs on our interactive map or schedule convenient doorstep pickups.")
+    with col_h3:
+        st.markdown("### 🎁 Earn & Redeem")
+        st.write("Accumulate verified EcoPoints on every kilogram recycled and redeem them for store vouchers and tree planting.")
+
+    st.markdown("---")
+    st.subheader("🔄 How It Works")
+    step1, step2, step3, step4 = st.columns(4)
+    step1.info("**1. Segregate**\n\nSort plastics, paper, e-waste, and metals into clean streams.")
+    step2.info("**2. Scan & Log**\n\nUpload an image or use your camera to log estimated weights.")
+    step3.info("**3. Deposit / Pickup**\n\nDrop off at an authorized center or book doorstep collection.")
+    step4.info("**4. Enjoy Perks**\n\nTurn EcoPoints into coffee coupons, grocery vouchers, or saplings.")
+
+    st.markdown("---")
+    st.subheader("📈 Current Recycling Rate Card")
+    rates_df = pd.DataFrame([
+        {"Material Category": k, "Reward Rate": f"{v} EcoPoints / kg"} 
+        for k, v in RATES.items()
+    ])
+    st.dataframe(rates_df, use_container_width=True)
+
 # ----------------- 1. Dashboard -----------------
-if nav_choice == "📊 Dashboard":
+elif nav_choice == "📊 Dashboard":
     st.title("♻️ Community Impact Dashboard")
     st.write("Track your recycling contributions, view environmental impact, and monitor scheduled pickups.")
 
