@@ -145,5 +145,5 @@ elif menu == "🏆 Leaderboard":
         {"Rank": "4", "User": st.session_state.username, "EcoPoints": st.session_state.ecopoints, "Badge": "🔰 Rising Star"}
     ]
     st.table(leaderboard_data)
-    python -m pip install streamlit
+  python -m pip install streamlit 
 python -m streamlit run app.py
