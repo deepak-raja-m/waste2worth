@@ -11,46 +11,80 @@ st.set_page_config(
     layout="wide"
 )
 
-# ----------------- Custom Eco Background & Theme Styling -----------------
+# ----------------- High-Contrast Eco Theme & Typography CSS -----------------
 st.markdown(
     """
     <style>
-    /* Main app container background with nature gradient & clean overlay */
+    /* Full Application Background */
     .stApp {
-        background: linear-gradient(135deg, rgba(237, 246, 240, 0.92) 0%, rgba(220, 240, 227, 0.92) 100%),
-                    url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1920&q=80');
-        background-size: cover;
-        background-position: center;
+        background: linear-gradient(135deg, #f4faf6 0%, #e2f1e7 50%, #d4ebd9 100%);
         background-attachment: fixed;
     }
 
-    /* Sidebar background */
-    [data-testid="stSidebar"] {
-        background-color: #1e3d2f !important;
-        color: #ffffff !important;
+    /* Force high contrast dark text across all body elements */
+    .stApp, .stApp p, .stApp span, .stApp label, .stApp div {
+        color: #172a1e !important;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
-    [data-testid="stSidebar"] * {
-        color: #ffffff !important;
+    /* Crisp Header Typography */
+    h1, h2, h3, h4, h5, h6 {
+        color: #0d381e !important;
+        font-weight: 700 !important;
     }
 
-    /* Cards / Containers styling */
+    /* Clean Card Wrappers for Forms, Tables & Containers */
+    [data-testid="stForm"], [data-testid="stMetric"], .stTable {
+        background-color: rgba(255, 255, 255, 0.92) !important;
+        padding: 18px !important;
+        border-radius: 12px !important;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05) !important;
+        border: 1px solid #c9e4d1 !important;
+    }
+
+    /* Metrics Styling */
     div[data-testid="stMetricValue"] {
-        color: #155724 !important;
-        font-weight: 700;
+        color: #1b6338 !important;
+        font-weight: 800 !important;
     }
-
-    .stButton>button {
-        background-color: #2d6a4f !important;
-        color: white !important;
-        border-radius: 8px !important;
-        border: none !important;
+    div[data-testid="stMetricLabel"] {
+        color: #31533d !important;
         font-weight: 600 !important;
     }
 
+    /* Sidebar Styling with High Contrast White-on-Dark */
+    [data-testid="stSidebar"] {
+        background-color: #153322 !important;
+    }
+    [data-testid="stSidebar"] * {
+        color: #f0f7f2 !important;
+    }
+    [data-testid="stSidebar"] .stRadio label {
+        color: #e5f5ea !important;
+        font-weight: 500 !important;
+    }
+
+    /* Primary Interactive Buttons */
+    .stButton>button {
+        background-color: #246d41 !important;
+        color: #ffffff !important;
+        font-weight: 600 !important;
+        border-radius: 8px !important;
+        border: none !important;
+        padding: 8px 18px !important;
+        box-shadow: 0 2px 6px rgba(36, 109, 65, 0.25) !important;
+    }
     .stButton>button:hover {
-        background-color: #1b4332 !important;
-        color: #d8f3dc !important;
+        background-color: #184c2d !important;
+        color: #ffffff !important;
+    }
+
+    /* Form input fields & dropdowns */
+    input, select, textarea, div[data-baseweb="select"] {
+        background-color: #ffffff !important;
+        color: #172a1e !important;
+        border: 1px solid #b6dcc0 !important;
+        border-radius: 6px !important;
     }
     </style>
     """,
