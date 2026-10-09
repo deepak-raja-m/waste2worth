@@ -11,7 +11,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# ----------------- Strict High-Contrast Theme & Sidebar CSS -----------------
+# ----------------- Aggressive High-Contrast Theme & File Uploader CSS -----------------
 st.markdown(
     """
     <style>
@@ -50,6 +50,47 @@ st.markdown(
         font-weight: 600 !important;
     }
 
+    /* ---------------------------------------------------------------- */
+    /* FILE UPLOADER COMPLETE VISIBILITY FIX (TARGETS ALL BASEWEB DIVS) */
+    /* ---------------------------------------------------------------- */
+    [data-testid="stFileUploader"],
+    [data-testid="stFileUploader"] section,
+    [data-testid="stFileUploader"] div,
+    [data-testid="stFileUploaderDropzone"] {
+        background-color: #ffffff !important;
+        border: 2px dashed #1b6338 !important;
+        border-radius: 12px !important;
+    }
+
+    /* Override all text, instructions, and limits inside the dropzone */
+    [data-testid="stFileUploader"] span,
+    [data-testid="stFileUploader"] p,
+    [data-testid="stFileUploader"] small,
+    [data-testid="stFileUploaderDropzone"] span,
+    [data-testid="stFileUploaderDropzone"] div {
+        color: #0d381e !important;
+        font-size: 15px !important;
+        font-weight: 600 !important;
+    }
+
+    /* The "Browse files" button inside the uploader */
+    [data-testid="stFileUploader"] button,
+    [data-testid="stFileUploaderDropzone"] button {
+        background-color: #1b6338 !important;
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        border: none !important;
+        border-radius: 8px !important;
+        padding: 8px 18px !important;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.15) !important;
+    }
+
+    [data-testid="stFileUploader"] button:hover,
+    [data-testid="stFileUploaderDropzone"] button:hover {
+        background-color: #144929 !important;
+        color: #ffffff !important;
+    }
+
     /* ---------------------------------------------------- */
     /* LEFT SIDEBAR HIGH-SPECIFICITY OVERRIDES             */
     /* ---------------------------------------------------- */
@@ -57,12 +98,10 @@ st.markdown(
         background-color: #0c2819 !important;
     }
 
-    /* Force all text tags, markdown spans, and labels to pure white */
     [data-testid="stSidebar"] * {
         color: #ffffff !important;
     }
 
-    /* Sidebar title and headings */
     [data-testid="stSidebar"] h1,
     [data-testid="stSidebar"] h2,
     [data-testid="stSidebar"] h3 {
@@ -70,7 +109,6 @@ st.markdown(
         font-weight: 800 !important;
     }
 
-    /* Sidebar Radio Button Label Containers */
     [data-testid="stSidebar"] div[role="radiogroup"] label {
         background: rgba(255, 255, 255, 0.12) !important;
         padding: 10px 14px !important;
@@ -85,7 +123,6 @@ st.markdown(
         background: rgba(255, 255, 255, 0.22) !important;
     }
 
-    /* Radio Label Inner Text Nodes */
     [data-testid="stSidebar"] div[role="radiogroup"] label p,
     [data-testid="stSidebar"] div[role="radiogroup"] label span,
     [data-testid="stSidebar"] div[role="radiogroup"] label div {
@@ -94,7 +131,6 @@ st.markdown(
         font-size: 15px !important;
     }
 
-    /* Sidebar Metric Card Customization */
     [data-testid="stSidebar"] [data-testid="stMetric"] {
         background-color: #ffffff !important;
         border-radius: 12px !important;
@@ -110,7 +146,7 @@ st.markdown(
         font-size: 32px !important;
     }
 
-    /* Primary Interactive Buttons */
+    /* Standard Action Buttons */
     .stButton>button {
         background-color: #246d41 !important;
         color: #ffffff !important;
@@ -234,7 +270,6 @@ if nav_choice == "🏠 Home":
     and exchange your EcoPoints for real rewards.
     """)
 
-    # Quick Highlights Banner
     col_h1, col_h2, col_h3 = st.columns(3)
     with col_h1:
         st.markdown("### 📸 Scan & Identify")
