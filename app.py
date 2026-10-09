@@ -12,7 +12,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# ----------------- Modern Top-Nav Website Styling CSS -----------------
+# ----------------- Modern Website & Form Styling CSS -----------------
 st.markdown(
     """
     <style>
@@ -31,25 +31,11 @@ st.markdown(
         color: #2d3748;
     }
 
-    /* Top Navigation Bar Container */
-    .top-nav {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 14px 28px;
-        background: #ffffff;
-        border-bottom: 1px solid #edf2f7;
-        margin-bottom: 24px;
-        position: sticky;
-        top: 0;
-        z-index: 999;
-    }
-
+    /* Top Navigation Bar */
     .brand-logo {
         font-size: 26px;
         font-weight: 800;
         color: #00aa6c !important;
-        text-decoration: none;
         display: flex;
         align-items: center;
         gap: 8px;
@@ -65,7 +51,28 @@ st.markdown(
         display: inline-block;
     }
 
-    /* Clean modern buttons */
+    /* Clean Card Layout for Forms & Metrics */
+    [data-testid="stForm"], [data-testid="stMetric"], .stTable {
+        background-color: #ffffff !important;
+        padding: 22px !important;
+        border-radius: 14px !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04) !important;
+        border: 1px solid #e2e8f0 !important;
+    }
+
+    /* Ensure Input Fields and Select Boxes are White & Crisp */
+    input, select, textarea, div[data-baseweb="select"], div[data-baseweb="input"] {
+        background-color: #ffffff !important;
+        color: #1a202c !important;
+        border-color: #cbd5e0 !important;
+    }
+    
+    input[type="number"], input[type="text"] {
+        background-color: #ffffff !important;
+        color: #1a202c !important;
+    }
+
+    /* Clean Buttons */
     .stButton>button {
         background-color: #00aa6c !important;
         color: #ffffff !important;
@@ -81,13 +88,14 @@ st.markdown(
         color: #ffffff !important;
     }
 
-    /* Cards & Containers */
-    [data-testid="stForm"], [data-testid="stMetric"], .stTable {
-        background-color: #fcfdfd !important;
-        padding: 22px !important;
-        border-radius: 14px !important;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04) !important;
-        border: 1px solid #e2e8f0 !important;
+    /* Form Submit Button */
+    div[data-testid="stForm"] button {
+        background-color: #00aa6c !important;
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        border-radius: 8px !important;
+        border: none !important;
+        padding: 10px 24px !important;
     }
 
     /* File uploader container */
@@ -118,8 +126,8 @@ if "ecopoints" not in st.session_state:
 
 if "waste_history" not in st.session_state:
     st.session_state.waste_history = [
-        {"Item": "Plastic Bottles", "Weight": "2.0 kg", "EcoPoints": 40, "Date": "2026-10-05"},
-        {"Item": "Cardboard Box", "Weight": "3.5 kg", "EcoPoints": 35, "Date": "2026-10-06"}
+        {"Item": "Plastic Bottles", "Weight": "500 g", "EcoPoints": 10, "Date": "2026-10-05"},
+        {"Item": "Cardboard Box", "Weight": "1200 g", "EcoPoints": 12, "Date": "2026-10-06"}
     ]
 
 if "pickup_requests" not in st.session_state:
@@ -137,6 +145,7 @@ if "pickup_requests" not in st.session_state:
 if "redeemed_coupons" not in st.session_state:
     st.session_state.redeemed_coupons = []
 
+# Rate card in EcoPoints per 1000g (1kg)
 RATES = {
     "Plastic": 20,
     "Paper & Cardboard": 10,
@@ -217,7 +226,6 @@ if selected == "Home":
         unsafe_allow_html=True
     )
 
-    # Hero CTA Button
     c_btn1, c_btn2, c_btn3 = st.columns([2.5, 1.2, 2.5])
     with c_btn2:
         if st.button("🚀 Get started today", use_container_width=True):
@@ -227,11 +235,10 @@ if selected == "Home":
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown("---")
     
-    # 3-Column Highlights
     col1, col2, col3 = st.columns(3)
     with col1:
         st.markdown("### 📸 Scan & Classify")
-        st.write("Instant AI computer vision to detect material categories and reward point rates per kg.")
+        st.write("Instant AI computer vision to detect material categories and reward point rates per gram.")
     with col2:
         st.markdown("### 📍 Drop or Pickup")
         st.write("Locate verified collection centers on our interactive map or schedule door-to-door pickups.")
@@ -243,7 +250,7 @@ if selected == "Home":
     st.subheader("🔄 How It Works")
     step1, step2, step3, step4 = st.columns(4)
     step1.info("**1. Segregate**\n\nSort plastics, paper, e-waste, and metals into clean streams.")
-    step2.info("**2. Scan & Log**\n\nUpload an image or use your camera to log estimated weights.")
+    step2.info("**2. Scan & Log**\n\nUpload an image or use your camera to log estimated weight in grams.")
     step3.info("**3. Deposit / Pickup**\n\nDrop off at an authorized center or book doorstep collection.")
     step4.info("**4. Enjoy Perks**\n\nTurn EcoPoints into coffee coupons, grocery vouchers, or saplings.")
 
@@ -279,7 +286,7 @@ elif selected == "AI Scanner":
 
             st.success(f"### Classification: **{detected_category}**")
             st.write(f"Confidence score: **{confidence_score}%**")
-            st.write(f"Ecoza reward rate: **{RATES[detected_category]} EcoPoints / kg**")
+            st.write(f"Ecoza reward rate: **{RATES[detected_category]} EcoPoints / 1000g**")
 
     st.markdown("---")
     st.subheader("Confirm Weight & Claim EcoPoints")
@@ -290,21 +297,32 @@ elif selected == "AI Scanner":
             list(RATES.keys()),
             index=list(RATES.keys()).index(detected_category) if detected_category in RATES else 0
         )
-        input_weight = st.number_input("Estimated Weight (in kg)", min_value=0.1, max_value=250.0, step=0.5, value=1.0)
         
-        calculated_points = int(input_weight * RATES[selected_category])
-        st.info(f"Points to earn: **{calculated_points} EcoPoints** (@ {RATES[selected_category]} pts/kg)")
+        # Grams input field
+        input_grams = st.number_input(
+            "Estimated Weight (in grams)",
+            min_value=10,
+            max_value=50000,
+            step=50,
+            value=250
+        )
+        
+        # Calculate points based on grams
+        rate_per_kg = RATES[selected_category]
+        calculated_points = max(1, int((input_grams / 1000.0) * rate_per_kg))
+        
+        st.info(f"Points to earn: **{calculated_points} EcoPoints** (Rate: {rate_per_kg} pts per 1000g)")
 
         submit_log = st.form_submit_button("Confirm & Add EcoPoints")
         if submit_log:
             st.session_state.ecopoints += calculated_points
             st.session_state.waste_history.append({
                 "Item": selected_category,
-                "Weight": f"{input_weight} kg",
+                "Weight": f"{input_grams} g",
                 "EcoPoints": calculated_points,
                 "Date": str(datetime.date.today())
             })
-            st.success(f"Logged {input_weight} kg of {selected_category}! You earned **{calculated_points} EcoPoints**.")
+            st.success(f"Logged {input_grams} g of {selected_category}! You earned **{calculated_points} EcoPoints**.")
             st.rerun()
 
 # ----------------- 3. Nearby Collection Centers (Map) -----------------
@@ -410,11 +428,11 @@ elif selected == "Leaderboard":
     st.write("Celebrating the top recyclers contributing to sustainable neighborhoods.")
 
     leaderboard = [
-        {"Rank": "🥇 1", "Recycler": "Aarav Sharma", "Diverted Waste": "44.0 kg", "EcoPoints": 880},
-        {"Rank": "🥈 2", "Recycler": "Priya Raman", "Diverted Waste": "38.5 kg", "EcoPoints": 770},
-        {"Rank": "🥉 3", "Recycler": st.session_state.username, "Diverted Waste": "28.0 kg", "EcoPoints": st.session_state.ecopoints},
-        {"Rank": "4", "Recycler": "Karthik Raj", "Diverted Waste": "18.5 kg", "EcoPoints": 370},
-        {"Rank": "5", "Recycler": "Divya N", "Diverted Waste": "12.0 kg", "EcoPoints": 240}
+        {"Rank": "🥇 1", "Recycler": "Aarav Sharma", "Diverted Waste": "44,000 g", "EcoPoints": 880},
+        {"Rank": "🥈 2", "Recycler": "Priya Raman", "Diverted Waste": "38,500 g", "EcoPoints": 770},
+        {"Rank": "🥉 3", "Recycler": st.session_state.username, "Diverted Waste": "28,000 g", "EcoPoints": st.session_state.ecopoints},
+        {"Rank": "4", "Recycler": "Karthik Raj", "Diverted Waste": "18,500 g", "EcoPoints": 370},
+        {"Rank": "5", "Recycler": "Divya N", "Diverted Waste": "12,000 g", "EcoPoints": 240}
     ]
     st.table(pd.DataFrame(leaderboard))
 
