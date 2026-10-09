@@ -6,24 +6,23 @@ from PIL import Image
 
 # ----------------- Page Configuration -----------------
 st.set_page_config(
-    page_title="Waste2Worth - Smart Waste Management",
-    page_icon="♻️",
+    page_title="Ecoza - Smart Circular Recycling",
+    page_icon="🌿",
     layout="wide"
 )
 
-# ----------------- Aggressive High-Contrast Theme & File Uploader CSS -----------------
+# ----------------- Clean & Modern UI Theme CSS -----------------
 st.markdown(
     """
     <style>
-    /* Full App Background */
+    /* Global Background */
     .stApp {
-        background: linear-gradient(135deg, #f4faf6 0%, #e8f5ec 50%, #d8ebd9 100%);
-        background-attachment: fixed;
+        background-color: #f7faf8 !important;
     }
 
-    /* Main Area Typography */
+    /* Base Typography */
     .stApp, .stApp p, .stApp span, .stApp label {
-        color: #172a1e !important;
+        color: #1a2e22 !important;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
@@ -32,13 +31,13 @@ st.markdown(
         font-weight: 700 !important;
     }
 
-    /* Cards / Containers in Main Screen */
+    /* Clean Card Layout for Forms & Metrics */
     [data-testid="stForm"], [data-testid="stMetric"], .stTable {
-        background-color: rgba(255, 255, 255, 0.95) !important;
-        padding: 18px !important;
+        background-color: #ffffff !important;
+        padding: 20px !important;
         border-radius: 12px !important;
-        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05) !important;
-        border: 1px solid #c9e4d1 !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04) !important;
+        border: 1px solid #dbe7df !important;
     }
 
     div[data-testid="stMetricValue"] {
@@ -46,56 +45,57 @@ st.markdown(
         font-weight: 800 !important;
     }
     div[data-testid="stMetricLabel"] {
-        color: #31533d !important;
+        color: #4a6353 !important;
         font-weight: 600 !important;
     }
 
-    /* ---------------------------------------------------------------- */
-    /* FILE UPLOADER COMPLETE VISIBILITY FIX (TARGETS ALL BASEWEB DIVS) */
-    /* ---------------------------------------------------------------- */
-    [data-testid="stFileUploader"],
-    [data-testid="stFileUploader"] section,
-    [data-testid="stFileUploader"] div,
-    [data-testid="stFileUploaderDropzone"] {
+    /* ---------------------------------------------------- */
+    /* CLEAN & PRECISE FILE UPLOADER STYLING               */
+    /* ---------------------------------------------------- */
+    [data-testid="stFileUploader"] {
         background-color: #ffffff !important;
-        border: 2px dashed #1b6338 !important;
+        border: 2px dashed #3a7d53 !important;
         border-radius: 12px !important;
+        padding: 24px !important;
+        margin: 10px 0 !important;
     }
 
-    /* Override all text, instructions, and limits inside the dropzone */
+    /* Reset all nested children so dashed borders don't repeat */
+    [data-testid="stFileUploader"] * {
+        border: none !important;
+        background-color: transparent !important;
+    }
+
+    /* Uploader Text */
     [data-testid="stFileUploader"] span,
     [data-testid="stFileUploader"] p,
-    [data-testid="stFileUploader"] small,
-    [data-testid="stFileUploaderDropzone"] span,
-    [data-testid="stFileUploaderDropzone"] div {
-        color: #0d381e !important;
-        font-size: 15px !important;
+    [data-testid="stFileUploader"] small {
+        color: #244230 !important;
         font-weight: 600 !important;
+        font-size: 15px !important;
     }
 
-    /* The "Browse files" button inside the uploader */
-    [data-testid="stFileUploader"] button,
-    [data-testid="stFileUploaderDropzone"] button {
+    /* Browse/Upload Button */
+    [data-testid="stFileUploader"] button {
         background-color: #1b6338 !important;
+        border-radius: 8px !important;
+        padding: 8px 20px !important;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1) !important;
+    }
+    [data-testid="stFileUploader"] button span,
+    [data-testid="stFileUploader"] button div {
         color: #ffffff !important;
         font-weight: 700 !important;
-        border: none !important;
-        border-radius: 8px !important;
-        padding: 8px 18px !important;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.15) !important;
     }
-
-    [data-testid="stFileUploader"] button:hover,
-    [data-testid="stFileUploaderDropzone"] button:hover {
-        background-color: #144929 !important;
-        color: #ffffff !important;
+    [data-testid="stFileUploader"] button:hover {
+        background-color: #144d2b !important;
     }
 
     /* ---------------------------------------------------- */
-    /* LEFT SIDEBAR HIGH-SPECIFICITY OVERRIDES             */
+    /* SIDEBAR NAVIGATION VISIBILITY                        */
     /* ---------------------------------------------------- */
     [data-testid="stSidebar"] {
-        background-color: #0c2819 !important;
+        background-color: #0f2d1d !important;
     }
 
     [data-testid="stSidebar"] * {
@@ -109,54 +109,55 @@ st.markdown(
         font-weight: 800 !important;
     }
 
+    /* Sidebar Radio Navigation Buttons */
     [data-testid="stSidebar"] div[role="radiogroup"] label {
-        background: rgba(255, 255, 255, 0.12) !important;
+        background: rgba(255, 255, 255, 0.1) !important;
         padding: 10px 14px !important;
         border-radius: 8px !important;
         margin-bottom: 8px !important;
-        border: 1px solid rgba(255, 255, 255, 0.25) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
         display: flex !important;
         align-items: center !important;
     }
 
     [data-testid="stSidebar"] div[role="radiogroup"] label:hover {
-        background: rgba(255, 255, 255, 0.22) !important;
+        background: rgba(255, 255, 255, 0.2) !important;
     }
 
     [data-testid="stSidebar"] div[role="radiogroup"] label p,
-    [data-testid="stSidebar"] div[role="radiogroup"] label span,
-    [data-testid="stSidebar"] div[role="radiogroup"] label div {
+    [data-testid="stSidebar"] div[role="radiogroup"] label span {
         color: #ffffff !important;
         font-weight: 600 !important;
         font-size: 15px !important;
     }
 
+    /* Metric card in sidebar */
     [data-testid="stSidebar"] [data-testid="stMetric"] {
         background-color: #ffffff !important;
-        border-radius: 12px !important;
+        border-radius: 10px !important;
         padding: 14px !important;
     }
     [data-testid="stSidebar"] [data-testid="stMetric"] [data-testid="stMetricLabel"] * {
-        color: #2d3748 !important;
+        color: #374151 !important;
         font-weight: 600 !important;
     }
     [data-testid="stSidebar"] [data-testid="stMetric"] [data-testid="stMetricValue"] * {
         color: #0f4d2a !important;
         font-weight: 800 !important;
-        font-size: 32px !important;
+        font-size: 30px !important;
     }
 
-    /* Standard Action Buttons */
+    /* Primary Buttons */
     .stButton>button {
-        background-color: #246d41 !important;
+        background-color: #1b6338 !important;
         color: #ffffff !important;
         font-weight: 600 !important;
         border-radius: 8px !important;
         border: none !important;
-        padding: 8px 18px !important;
+        padding: 9px 20px !important;
     }
     .stButton>button:hover {
-        background-color: #184c2d !important;
+        background-color: #144d2b !important;
         color: #ffffff !important;
     }
     </style>
@@ -180,7 +181,7 @@ if "waste_history" not in st.session_state:
 if "pickup_requests" not in st.session_state:
     st.session_state.pickup_requests = [
         {
-            "Pickup ID": "W2W-8041",
+            "Pickup ID": "ECO-8041",
             "Address": "Anna Nagar, Main Road",
             "Items": "Plastic, Metal / Aluminium",
             "Date": "2026-10-10",
@@ -205,7 +206,7 @@ RATES = {
 # Nearby recycling centers data
 RECYCLING_CENTERS = [
     {
-        "Center Name": "GreenTech E-Waste Hub",
+        "Center Name": "Ecoza GreenTech E-Waste Hub",
         "Type": "E-Waste & Electronics",
         "Address": "Guindy Industrial Estate",
         "Contact": "+91 94441 23456",
@@ -221,7 +222,7 @@ RECYCLING_CENTERS = [
         "lon": 80.2101
     },
     {
-        "Center Name": "ScrapMetal & Glass Processing Center",
+        "Center Name": "ScrapMetal & Glass Processing Hub",
         "Type": "Metal & Glass Recyclables",
         "Address": "Ambattur Industrial Estate",
         "Contact": "+91 97720 11223",
@@ -229,7 +230,7 @@ RECYCLING_CENTERS = [
         "lon": 80.1548
     },
     {
-        "Center Name": "Community Compost & Organic Station",
+        "Center Name": "Ecoza Community Compost Station",
         "Type": "Wet & Organic Waste",
         "Address": "Adyar Eco Park Zone",
         "Contact": "+91 91234 98765",
@@ -239,7 +240,7 @@ RECYCLING_CENTERS = [
 ]
 
 # ----------------- Left Sidebar Navigation -----------------
-st.sidebar.markdown("## 🌿 Waste2Worth")
+st.sidebar.markdown("## 🌿 Ecoza")
 st.sidebar.markdown(f"**Logged in:** {st.session_state.username}")
 st.sidebar.metric(label="Your EcoPoints", value=f"{st.session_state.ecopoints} pts")
 
@@ -257,40 +258,40 @@ nav_choice = st.sidebar.radio(
 )
 
 st.sidebar.markdown("---")
-st.sidebar.caption("Waste2Worth • Circular Economy Platform")
+st.sidebar.caption("Ecoza • Circular Economy Platform")
 
 # ----------------- 0. Home Screen -----------------
 if nav_choice == "🏠 Home":
-    st.title("🌱 Welcome to Waste2Worth")
+    st.title("🌱 Welcome to Ecoza")
     st.subheader("Transforming Everyday Waste into Value, Rewards, and Community Impact")
     
     st.markdown("""
-    Waste2Worth bridges everyday households with authorized circular recycling streams. 
-    Classify items using on-device computer vision, pinpoint authorized drop-offs, schedule verified pickups, 
-    and exchange your EcoPoints for real rewards.
+    **Ecoza** connects conscious households with certified circular recycling networks. 
+    Use computer vision to identify materials instantly, find certified neighborhood drop-offs, schedule verified doorstep collections, 
+    and convert your collected EcoPoints into valuable rewards.
     """)
 
     col_h1, col_h2, col_h3 = st.columns(3)
     with col_h1:
         st.markdown("### 📸 Scan & Identify")
-        st.write("Use instant AI image recognition to identify waste materials and view their coin redemption value per kg.")
+        st.write("Scan household waste using AI vision to identify categories and preview points per kg.")
     with col_h2:
         st.markdown("### 📍 Drop or Pickup")
-        st.write("Find nearby certified scrap and drop-off hubs on our interactive map or schedule convenient doorstep pickups.")
+        st.write("Locate verified collection centers on our live map or schedule hassle-free home pickups.")
     with col_h3:
         st.markdown("### 🎁 Earn & Redeem")
-        st.write("Accumulate verified EcoPoints on every kilogram recycled and redeem them for store vouchers and tree planting.")
+        st.write("Accumulate verified EcoPoints on every drop-off to redeem cafe deals, groceries, and tree planting.")
 
     st.markdown("---")
-    st.subheader("🔄 How It Works")
+    st.subheader("🔄 How Ecoza Works")
     step1, step2, step3, step4 = st.columns(4)
-    step1.info("**1. Segregate**\n\nSort plastics, paper, e-waste, and metals into clean streams.")
-    step2.info("**2. Scan & Log**\n\nUpload an image or use your camera to log estimated weights.")
-    step3.info("**3. Deposit / Pickup**\n\nDrop off at an authorized center or book doorstep collection.")
-    step4.info("**4. Enjoy Perks**\n\nTurn EcoPoints into coffee coupons, grocery vouchers, or saplings.")
+    step1.info("**1. Segregate**\n\nSort plastics, paper, e-waste, and metals into clean bags.")
+    step2.info("**2. Scan & Log**\n\nUpload a picture or snap a live photo to log weights.")
+    step3.info("**3. Deposit / Pickup**\n\nDrop off at an authorized Ecoza station or book doorstep pickup.")
+    step4.info("**4. Redeem Rewards**\n\nExchange EcoPoints for dining vouchers, bus passes, and discounts.")
 
     st.markdown("---")
-    st.subheader("📈 Current Recycling Rate Card")
+    st.subheader("📈 Ecoza Recycling Rate Card")
     rates_df = pd.DataFrame([
         {"Material Category": k, "Reward Rate": f"{v} EcoPoints / kg"} 
         for k, v in RATES.items()
@@ -299,8 +300,8 @@ if nav_choice == "🏠 Home":
 
 # ----------------- 1. Dashboard -----------------
 elif nav_choice == "📊 Dashboard":
-    st.title("♻️ Community Impact Dashboard")
-    st.write("Track your recycling contributions, view environmental impact, and monitor scheduled pickups.")
+    st.title("♻️ Ecoza Community Dashboard")
+    st.write("Track your recycling footprint, carbon offset, and pending collection requests.")
 
     total_dropoffs = len(st.session_state.waste_history)
     col1, col2, col3, col4 = st.columns(4)
@@ -318,7 +319,7 @@ elif nav_choice == "📊 Dashboard":
         st.info("No recycling drop-offs recorded yet.")
 
     if st.session_state.redeemed_coupons:
-        st.subheader("🎟️ Your Redeemed Coupons")
+        st.subheader("🎟️ Your Active Coupons")
         df_coupons = pd.DataFrame(st.session_state.redeemed_coupons)
         st.dataframe(df_coupons, use_container_width=True)
 
@@ -346,7 +347,7 @@ elif nav_choice == "📸 AI Waste Scanner & Classifier":
     if uploaded_image:
         col_img, col_pred = st.columns([1, 2])
         with col_img:
-            st.image(uploaded_image, caption="Analyzed Item", use_container_width=True)
+            st.image(uploaded_image, caption="Uploaded Material", use_container_width=True)
         with col_pred:
             possible_categories = ["Plastic", "Paper & Cardboard", "Glass", "Metal / Aluminium", "E-Waste"]
             detected_category = random.choice(possible_categories)
@@ -354,7 +355,7 @@ elif nav_choice == "📸 AI Waste Scanner & Classifier":
 
             st.success(f"### Classification: **{detected_category}**")
             st.write(f"Confidence score: **{confidence_score}%**")
-            st.write(f"Recycling reward rate: **{RATES[detected_category]} EcoPoints / kg**")
+            st.write(f"Ecoza reward rate: **{RATES[detected_category]} EcoPoints / kg**")
 
     st.markdown("---")
     st.subheader("Confirm Weight & Claim EcoPoints")
@@ -384,8 +385,8 @@ elif nav_choice == "📸 AI Waste Scanner & Classifier":
 
 # ----------------- 3. Nearby Collection Centers (Map) -----------------
 elif nav_choice == "📍 Nearby Collection Centers (Map)":
-    st.title("📍 Nearby Recycling & Drop-off Centers")
-    st.write("Find authorized recycling drop-off centers and scrap depots in your area.")
+    st.title("📍 Nearby Ecoza Collection Centers")
+    st.write("Find certified circular drop-off hubs and scrap depots in your area.")
 
     df_centers = pd.DataFrame(RECYCLING_CENTERS)
 
@@ -414,7 +415,7 @@ elif nav_choice == "📍 Nearby Collection Centers (Map)":
 # ----------------- 4. Doorstep Pickup -----------------
 elif nav_choice == "🚚 Doorstep Pickup":
     st.title("🚚 Schedule Doorstep Collection")
-    st.write("Book a scheduled pickup for bulk recyclables straight from your home or office.")
+    st.write("Book a verified Ecoza agent to collect bulk recyclables directly from your doorstep.")
 
     with st.form("pickup_form"):
         pickup_address = st.text_area("Pickup Address", placeholder="Apartment / Door No., Street, City")
@@ -423,12 +424,12 @@ elif nav_choice == "🚚 Doorstep Pickup":
         phone = st.text_input("Contact Mobile", placeholder="+91 9876543210")
         notes = st.text_input("Special Notes (Optional)")
 
-        submit_booking = st.form_submit_button("Book Pickup")
+        submit_booking = st.form_submit_button("Book Ecoza Pickup")
         if submit_booking:
             if not pickup_address or not phone:
                 st.error("Please enter both the address and phone number.")
             else:
-                new_id = f"W2W-{random.randint(1000, 9999)}"
+                new_id = f"ECO-{random.randint(1000, 9999)}"
                 st.session_state.pickup_requests.append({
                     "Pickup ID": new_id,
                     "Address": pickup_address,
@@ -437,23 +438,23 @@ elif nav_choice == "🚚 Doorstep Pickup":
                     "Contact": phone,
                     "Status": "Confirmed"
                 })
-                st.success(f"Pickup booked! Your Tracking ID is **{new_id}**.")
+                st.success(f"Pickup booked! Your Ecoza Tracking ID is **{new_id}**.")
                 st.rerun()
 
     if st.session_state.pickup_requests:
         st.markdown("---")
-        st.subheader("Your Scheduled Pickups")
+        st.subheader("Active Pickup Requests")
         st.dataframe(pd.DataFrame(st.session_state.pickup_requests), use_container_width=True)
 
 # ----------------- 5. Rewards Store -----------------
 elif nav_choice == "🎁 Rewards Store":
-    st.title("🎁 EcoPoints Rewards Store")
-    st.write(f"Spend points on vouchers and eco-friendly perks. Balance: **{st.session_state.ecopoints} EcoPoints**")
+    st.title("🎁 Ecoza Rewards Store")
+    st.write(f"Exchange your EcoPoints for eco-conscious rewards. Balance: **{st.session_state.ecopoints} EcoPoints**")
 
     rewards_list = [
         {"title": "Free Cafe Beverage", "cost": 50, "desc": "1 free artisanal beverage at partner cafes."},
         {"title": "Organic Grocery Coupon (₹100 Off)", "cost": 100, "desc": "Redeemable at local organic partner stores."},
-        {"title": "Metro / Transit Recharge (₹150)", "cost": 150, "desc": "Recharge voucher for city metro or public bus pass."},
+        {"title": "Metro / Transit Recharge (₹150)", "cost": 150, "desc": "Recharge voucher for city metro or bus passes."},
         {"title": "Plant an Urban Sapling", "cost": 200, "desc": "Sponsor a tree sapling planted with your name tag."}
     ]
 
@@ -468,7 +469,7 @@ elif nav_choice == "🎁 Rewards Store":
             if st.button(f"Redeem ({reward['cost']} pts)", key=f"rwd_{idx}"):
                 if st.session_state.ecopoints >= reward["cost"]:
                     st.session_state.ecopoints -= reward["cost"]
-                    voucher_code = f"ECO-{random.randint(10000, 99999)}"
+                    voucher_code = f"ECOZA-{random.randint(10000, 99999)}"
                     st.session_state.redeemed_coupons.append({
                         "Reward": reward["title"],
                         "Coupon Code": voucher_code,
@@ -482,8 +483,8 @@ elif nav_choice == "🎁 Rewards Store":
 
 # ----------------- 6. Community Leaderboard -----------------
 elif nav_choice == "🏆 Community Leaderboard":
-    st.title("🏆 Community Leaderboard")
-    st.write("Recognizing community recyclers leading the charge for zero waste.")
+    st.title("🏆 Ecoza Community Leaderboard")
+    st.write("Celebrating the top recyclers contributing to sustainable neighborhoods.")
 
     leaderboard = [
         {"Rank": "🥇 1", "Recycler": "Aarav Sharma", "Diverted Waste": "44.0 kg", "EcoPoints": 880},
