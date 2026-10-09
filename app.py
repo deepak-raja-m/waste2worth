@@ -12,98 +12,131 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# ----------------- Modern Website & Form Styling CSS -----------------
+# ----------------- Vibrant High-End Theme & Glassmorphism CSS -----------------
 st.markdown(
     """
     <style>
-    /* Hide default sidebar completely */
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+    /* Hide default sidebar */
     [data-testid="stSidebar"], section[data-testid="stSidebar"] {
         display: none !important;
     }
     
-    /* Global Background & Typography */
+    /* Global Background with Soft Mesh Gradient Glow */
     .stApp {
-        background-color: #ffffff !important;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background: radial-gradient(circle at 10% 20%, rgba(16, 185, 129, 0.08) 0%, transparent 40%),
+                    radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.08) 0%, transparent 40%),
+                    #f8fafc !important;
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
     }
     
     .stApp p, .stApp span, .stApp label, .stApp div {
-        color: #2d3748;
+        color: #1e293b;
+        font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
-    /* Top Navigation Bar */
+    /* Gradient Brand Logo */
     .brand-logo {
-        font-size: 26px;
+        font-size: 28px;
         font-weight: 800;
-        color: #00aa6c !important;
+        background: linear-gradient(135deg, #059669 0%, #06b6d4 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         display: flex;
         align-items: center;
         gap: 8px;
+        letter-spacing: -0.5px;
     }
 
+    /* Floating Pill Badge */
     .badge-points {
-        background-color: #00aa6c;
+        background: linear-gradient(135deg, #059669 0%, #10b981 100%);
         color: #ffffff !important;
         font-weight: 700;
-        padding: 8px 18px;
-        border-radius: 20px;
+        padding: 9px 20px;
+        border-radius: 9999px;
         font-size: 14px;
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
     }
 
-    /* Clean Card Layout for Forms & Metrics */
+    /* Top Radio Navbar Container */
+    div[role="radiogroup"] {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
+        padding: 6px 10px;
+        border-radius: 9999px;
+        border: 1px solid rgba(226, 232, 240, 0.8);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    div[role="radiogroup"] label {
+        padding: 6px 14px !important;
+        border-radius: 9999px !important;
+        transition: all 0.2s ease;
+    }
+
+    div[role="radiogroup"] label:hover {
+        background: rgba(241, 245, 249, 0.8) !important;
+    }
+
+    /* Frosted Glass Cards & Containers */
     [data-testid="stForm"], [data-testid="stMetric"], .stTable {
-        background-color: #ffffff !important;
-        padding: 22px !important;
-        border-radius: 14px !important;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04) !important;
-        border: 1px solid #e2e8f0 !important;
+        background: rgba(255, 255, 255, 0.9) !important;
+        backdrop-filter: blur(16px) !important;
+        padding: 24px !important;
+        border-radius: 18px !important;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04) !important;
+        border: 1px solid rgba(226, 232, 240, 0.9) !important;
     }
 
-    /* Ensure Input Fields and Select Boxes are White & Crisp */
+    /* Metric Values Accent */
+    div[data-testid="stMetricValue"] {
+        background: linear-gradient(135deg, #059669 0%, #0284c7 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 800 !important;
+    }
+
+    /* Sleek Input Fields */
     input, select, textarea, div[data-baseweb="select"], div[data-baseweb="input"] {
         background-color: #ffffff !important;
-        color: #1a202c !important;
-        border-color: #cbd5e0 !important;
-    }
-    
-    input[type="number"], input[type="text"] {
-        background-color: #ffffff !important;
-        color: #1a202c !important;
+        color: #0f172a !important;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 10px !important;
     }
 
-    /* Clean Buttons */
-    .stButton>button {
-        background-color: #00aa6c !important;
-        color: #ffffff !important;
-        font-weight: 600 !important;
-        border-radius: 8px !important;
-        border: none !important;
-        padding: 10px 22px !important;
-        box-shadow: 0 2px 8px rgba(0, 170, 108, 0.2) !important;
-    }
-    
-    .stButton>button:hover {
-        background-color: #008f5a !important;
-        color: #ffffff !important;
-    }
-
-    /* Form Submit Button */
-    div[data-testid="stForm"] button {
-        background-color: #00aa6c !important;
+    /* Gradient Buttons */
+    .stButton>button, div[data-testid="stForm"] button {
+        background: linear-gradient(135deg, #059669 0%, #0d9488 100%) !important;
         color: #ffffff !important;
         font-weight: 700 !important;
-        border-radius: 8px !important;
+        border-radius: 12px !important;
         border: none !important;
         padding: 10px 24px !important;
+        box-shadow: 0 4px 14px rgba(13, 148, 136, 0.25) !important;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    
+    .stButton>button:hover, div[data-testid="stForm"] button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(13, 148, 136, 0.35) !important;
+        color: #ffffff !important;
     }
 
-    /* File uploader container */
+    /* File Uploader Container */
     [data-testid="stFileUploader"] {
-        background-color: #f7faf8 !important;
-        border: 2px dashed #00aa6c !important;
-        border-radius: 12px !important;
-        padding: 24px !important;
+        background: #ffffff !important;
+        border: 2px dashed #10b981 !important;
+        border-radius: 16px !important;
+        padding: 28px !important;
+        box-shadow: 0 4px 16px rgba(16, 185, 129, 0.05);
     }
 
     [data-testid="stFileUploader"] * {
@@ -147,7 +180,6 @@ if "pickup_requests" not in st.session_state:
 if "redeemed_coupons" not in st.session_state:
     st.session_state.redeemed_coupons = []
 
-# Rate card in EcoPoints per 1000g (1kg)
 RATES = {
     "Plastic": 20,
     "Paper & Cardboard": 10,
@@ -207,24 +239,26 @@ with head_col2:
         horizontal=True,
         label_visibility="collapsed"
     )
-    # Sync if user manually clicked a radio tab
     if selected != st.session_state.current_page:
         st.session_state.current_page = selected
 
 with head_col3:
-    st.markdown(f'<div class="badge-points">🌟 {st.session_state.ecopoints} EcoPoints</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="badge-points">✨ {st.session_state.ecopoints} EcoPoints</div>', unsafe_allow_html=True)
 
-st.markdown("<hr style='margin-top: 4px; margin-bottom: 24px; border: 0; border-top: 1px solid #edf2f7;'>", unsafe_allow_html=True)
+st.markdown("<hr style='margin-top: 4px; margin-bottom: 24px; border: 0; border-top: 1px solid rgba(226, 232, 240, 0.6);'>", unsafe_allow_html=True)
 
 # ----------------- 1. Home / Hero Screen -----------------
 if st.session_state.current_page == "Home":
     st.markdown(
         """
-        <div style="text-align: center; max-width: 820px; margin: 0 auto; padding: 20px 0 20px 0;">
-            <h1 style="font-size: 46px; font-weight: 800; color: #111827; line-height: 1.2; margin-bottom: 12px;">
-                Join the movement for smarter <span style="color: #00aa6c;">waste solutions</span>
+        <div style="text-align: center; max-width: 820px; margin: 0 auto; padding: 25px 0 20px 0;">
+            <span style="background: rgba(16, 185, 129, 0.1); color: #059669; font-weight: 700; padding: 6px 16px; border-radius: 9999px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.8px;">
+                🌱 Circular Living Made Effortless
+            </span>
+            <h1 style="font-size: 48px; font-weight: 800; color: #0f172a; line-height: 1.15; margin-top: 16px; margin-bottom: 12px; letter-spacing: -1px;">
+                Join the movement for smarter <span style="background: linear-gradient(135deg, #059669, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">waste solutions</span>
             </h1>
-            <p style="font-size: 18px; color: #6b7280; margin-bottom: 24px;">
+            <p style="font-size: 18px; color: #64748b; margin-bottom: 24px; font-weight: 500;">
                 Discover the power of responsible waste management and circular recycling right at your fingertips.
             </p>
         </div>
@@ -243,14 +277,38 @@ if st.session_state.current_page == "Home":
     
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.markdown("### 📸 Scan & Classify")
-        st.write("Instant AI computer vision to detect material categories and reward point rates per gram.")
+        st.markdown(
+            """
+            <div style="background: #ffffff; padding: 24px; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 4px 16px rgba(0,0,0,0.02);">
+                <div style="font-size: 28px; margin-bottom: 10px;">📸</div>
+                <h3 style="margin: 0 0 8px 0; color: #0f172a;">Scan & Classify</h3>
+                <p style="color: #64748b; font-size: 14px; margin: 0;">Instant AI computer vision to detect material categories and reward point rates per gram.</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
     with col2:
-        st.markdown("### 📍 Drop or Pickup")
-        st.write("Locate verified collection centers on our interactive map or schedule door-to-door pickups.")
+        st.markdown(
+            """
+            <div style="background: #ffffff; padding: 24px; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 4px 16px rgba(0,0,0,0.02);">
+                <div style="font-size: 28px; margin-bottom: 10px;">📍</div>
+                <h3 style="margin: 0 0 8px 0; color: #0f172a;">Drop or Pickup</h3>
+                <p style="color: #64748b; font-size: 14px; margin: 0;">Locate verified collection centers on our interactive map or schedule door-to-door pickups.</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
     with col3:
-        st.markdown("### 🎁 Earn & Redeem")
-        st.write("Convert saved EcoPoints into merchant vouchers, bus discounts, and tree plantations.")
+        st.markdown(
+            """
+            <div style="background: #ffffff; padding: 24px; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 4px 16px rgba(0,0,0,0.02);">
+                <div style="font-size: 28px; margin-bottom: 10px;">🎁</div>
+                <h3 style="margin: 0 0 8px 0; color: #0f172a;">Earn & Redeem</h3>
+                <p style="color: #64748b; font-size: 14px; margin: 0;">Convert saved EcoPoints into merchant vouchers, bus discounts, and tree plantations.</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
     st.markdown("---")
     st.subheader("🔄 How It Works")
