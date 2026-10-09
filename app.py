@@ -265,11 +265,7 @@ if nav_choice == "🏠 Home":
     st.title("🌱 Welcome to Ecoza")
     st.subheader("Transforming Everyday Waste into Value, Rewards, and Community Impact")
     
-    st.markdown("""
-    **Ecoza** connects conscious households with certified circular recycling networks. 
-    Use computer vision to identify materials instantly, find certified neighborhood drop-offs, schedule verified doorstep collections, 
-    and convert your collected EcoPoints into valuable rewards.
-    """)
+    st.markdown("<br>", unsafe_allow_html=True)
 
     col_h1, col_h2, col_h3 = st.columns(3)
     with col_h1:
