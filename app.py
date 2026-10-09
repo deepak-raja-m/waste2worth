@@ -81,18 +81,6 @@ st.markdown(
         color: #ffffff !important;
     }
 
-    /* Secondary CTA button */
-    .btn-secondary {
-        border: 1.5px solid #cbd5e0 !important;
-        background: #ffffff !important;
-        color: #2d3748 !important;
-        border-radius: 8px;
-        padding: 9px 20px;
-        font-weight: 600;
-        text-decoration: none;
-        display: inline-block;
-    }
-
     /* Cards & Containers */
     [data-testid="stForm"], [data-testid="stMetric"], .stTable {
         background-color: #fcfdfd !important;
@@ -213,16 +201,15 @@ with head_col3:
 
 st.markdown("<hr style='margin-top: 4px; margin-bottom: 24px; border: 0; border-top: 1px solid #edf2f7;'>", unsafe_allow_html=True)
 
-# ----------------- 1. Home / Hero Screen (Matching Image) -----------------
+# ----------------- 1. Home / Hero Screen -----------------
 if selected == "Home":
-    # Centered Hero Section Header
     st.markdown(
         """
-        <div style="text-align: center; max-width: 820px; margin: 0 auto; padding: 20px 0 30px 0;">
+        <div style="text-align: center; max-width: 820px; margin: 0 auto; padding: 20px 0 20px 0;">
             <h1 style="font-size: 46px; font-weight: 800; color: #111827; line-height: 1.2; margin-bottom: 12px;">
                 Join the movement for smarter <span style="color: #00aa6c;">waste solutions</span>
             </h1>
-            <p style="font-size: 18px; color: #6b7280; margin-bottom: 26px;">
+            <p style="font-size: 18px; color: #6b7280; margin-bottom: 24px;">
                 Discover the power of responsible waste management and circular recycling right at your fingertips.
             </p>
         </div>
@@ -230,21 +217,14 @@ if selected == "Home":
         unsafe_allow_html=True
     )
 
-    # Hero CTA Buttons
+    # Hero CTA Button
     c_btn1, c_btn2, c_btn3 = st.columns([2.5, 1.2, 2.5])
     with c_btn2:
         if st.button("🚀 Get started today", use_container_width=True):
             st.session_state.top_navbar_radio = "AI Scanner"
             st.rerun()
 
-    # Rounded Hero Image from screenshot
-    st.markdown("<div style='margin-top: 24px;'></div>", unsafe_allow_html=True)
-    st.image(
-        "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=1600&q=80",
-        caption="Sustainable waste separation and circular recycling in everyday households",
-        use_container_width=True
-    )
-
+    st.markdown("<br>", unsafe_allow_html=True)
     st.markdown("---")
     
     # 3-Column Highlights
@@ -258,6 +238,14 @@ if selected == "Home":
     with col3:
         st.markdown("### 🎁 Earn & Redeem")
         st.write("Convert saved EcoPoints into merchant vouchers, bus discounts, and tree plantations.")
+
+    st.markdown("---")
+    st.subheader("🔄 How It Works")
+    step1, step2, step3, step4 = st.columns(4)
+    step1.info("**1. Segregate**\n\nSort plastics, paper, e-waste, and metals into clean streams.")
+    step2.info("**2. Scan & Log**\n\nUpload an image or use your camera to log estimated weights.")
+    step3.info("**3. Deposit / Pickup**\n\nDrop off at an authorized center or book doorstep collection.")
+    step4.info("**4. Enjoy Perks**\n\nTurn EcoPoints into coffee coupons, grocery vouchers, or saplings.")
 
 # ----------------- 2. AI Scanner & Classifier -----------------
 elif selected == "AI Scanner":
