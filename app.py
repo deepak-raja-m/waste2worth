@@ -115,8 +115,10 @@ st.markdown(
 )
 
 # ----------------- Session State Initialization -----------------
-if "nav_page" not in st.session_state:
-    st.session_state.nav_page = "Home"
+PAGES = ["Home", "AI Scanner", "Drop-off Map", "Doorstep Pickup", "Rewards Store", "Leaderboard", "Dashboard"]
+
+if "current_page" not in st.session_state:
+    st.session_state.current_page = "Home"
 
 if "username" not in st.session_state:
     st.session_state.username = "Green Hero"
@@ -197,13 +199,17 @@ with head_col1:
     st.markdown('<div class="brand-logo">🌿 Ecoza</div>', unsafe_allow_html=True)
 
 with head_col2:
+    current_index = PAGES.index(st.session_state.current_page) if st.session_state.current_page in PAGES else 0
     selected = st.radio(
         "Navigation Bar",
-        ["Home", "AI Scanner", "Drop-off Map", "Doorstep Pickup", "Rewards Store", "Leaderboard", "Dashboard"],
+        PAGES,
+        index=current_index,
         horizontal=True,
-        label_visibility="collapsed",
-        key="top_navbar_radio"
+        label_visibility="collapsed"
     )
+    # Sync if user manually clicked a radio tab
+    if selected != st.session_state.current_page:
+        st.session_state.current_page = selected
 
 with head_col3:
     st.markdown(f'<div class="badge-points">🌟 {st.session_state.ecopoints} EcoPoints</div>', unsafe_allow_html=True)
@@ -211,7 +217,7 @@ with head_col3:
 st.markdown("<hr style='margin-top: 4px; margin-bottom: 24px; border: 0; border-top: 1px solid #edf2f7;'>", unsafe_allow_html=True)
 
 # ----------------- 1. Home / Hero Screen -----------------
-if selected == "Home":
+if st.session_state.current_page == "Home":
     st.markdown(
         """
         <div style="text-align: center; max-width: 820px; margin: 0 auto; padding: 20px 0 20px 0;">
@@ -229,7 +235,7 @@ if selected == "Home":
     c_btn1, c_btn2, c_btn3 = st.columns([2.5, 1.2, 2.5])
     with c_btn2:
         if st.button("🚀 Get started today", use_container_width=True):
-            st.session_state.top_navbar_radio = "AI Scanner"
+            st.session_state.current_page = "AI Scanner"
             st.rerun()
 
     st.markdown("<br>", unsafe_allow_html=True)
@@ -255,7 +261,7 @@ if selected == "Home":
     step4.info("**4. Enjoy Perks**\n\nTurn EcoPoints into coffee coupons, grocery vouchers, or saplings.")
 
 # ----------------- 2. AI Scanner & Classifier -----------------
-elif selected == "AI Scanner":
+elif st.session_state.current_page == "AI Scanner":
     st.title("📸 AI Waste Scanner & Classifier")
     st.write("Upload an image or use your device camera to detect the waste category and log your EcoPoints.")
 
@@ -298,7 +304,6 @@ elif selected == "AI Scanner":
             index=list(RATES.keys()).index(detected_category) if detected_category in RATES else 0
         )
         
-        # Grams input field
         input_grams = st.number_input(
             "Estimated Weight (in grams)",
             min_value=10,
@@ -307,7 +312,6 @@ elif selected == "AI Scanner":
             value=250
         )
         
-        # Calculate points based on grams
         rate_per_kg = RATES[selected_category]
         calculated_points = max(1, int((input_grams / 1000.0) * rate_per_kg))
         
@@ -326,7 +330,7 @@ elif selected == "AI Scanner":
             st.rerun()
 
 # ----------------- 3. Nearby Collection Centers (Map) -----------------
-elif selected == "Drop-off Map":
+elif st.session_state.current_page == "Drop-off Map":
     st.title("📍 Nearby Ecoza Collection Centers")
     st.write("Find certified circular drop-off hubs and scrap depots in your area.")
 
@@ -354,7 +358,7 @@ elif selected == "Drop-off Map":
             st.divider()
 
 # ----------------- 4. Doorstep Pickup -----------------
-elif selected == "Doorstep Pickup":
+elif st.session_state.current_page == "Doorstep Pickup":
     st.title("🚚 Schedule Doorstep Collection")
     st.write("Book a verified Ecoza agent to collect bulk recyclables directly from your doorstep.")
 
@@ -388,7 +392,7 @@ elif selected == "Doorstep Pickup":
         st.dataframe(pd.DataFrame(st.session_state.pickup_requests), use_container_width=True)
 
 # ----------------- 5. Rewards Store -----------------
-elif selected == "Rewards Store":
+elif st.session_state.current_page == "Rewards Store":
     st.title("🎁 Ecoza Rewards Store")
     st.write(f"Exchange your EcoPoints for eco-conscious rewards. Balance: **{st.session_state.ecopoints} EcoPoints**")
 
@@ -423,7 +427,7 @@ elif selected == "Rewards Store":
             st.divider()
 
 # ----------------- 6. Community Leaderboard -----------------
-elif selected == "Leaderboard":
+elif st.session_state.current_page == "Leaderboard":
     st.title("🏆 Ecoza Community Leaderboard")
     st.write("Celebrating the top recyclers contributing to sustainable neighborhoods.")
 
@@ -437,7 +441,7 @@ elif selected == "Leaderboard":
     st.table(pd.DataFrame(leaderboard))
 
 # ----------------- 7. User Dashboard -----------------
-elif selected == "Dashboard":
+elif st.session_state.current_page == "Dashboard":
     st.title("♻️ Ecoza Community Dashboard")
     st.write("Track your recycling footprint, carbon offset, and pending collection requests.")
 
