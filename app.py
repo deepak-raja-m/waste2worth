@@ -99,6 +99,17 @@ st.markdown(
         border: 3px solid #d1fae5 !important;
     }
 
+    /* High-contrast form text inputs */
+    input, select, textarea, div[data-baseweb="input"], div[data-baseweb="base-input"] {
+        background-color: #ffffff !important;
+        color: #1e293b !important;
+        border-color: #a7f3d0 !important;
+    }
+
+    input::placeholder {
+        color: #94a3b8 !important;
+    }
+
     div[data-testid="stMetricValue"] {
         color: #059669 !important;
         font-family: 'Fredoka', cursive !important;
@@ -146,16 +157,17 @@ st.markdown(
 if "authenticated" not in st.session_state:
     st.session_state.authenticated = False
 
-if "user_email" not in st.session_state:
-    st.session_state.user_email = ""
+if "user_identifier" not in st.session_state:
+    st.session_state.user_identifier = ""
 
 if "username" not in st.session_state:
     st.session_state.username = "Eco Champion"
 
 if "registered_users" not in st.session_state:
-    # Default demo credentials
+    # Demo credentials accepting email or mobile
     st.session_state.registered_users = {
-        "student@ecoza.com": {"password": "ecoza", "name": "Super Hero Student"}
+        "user@ecoza.com": {"password": "ecoza", "name": "Deepak Raja"},
+        "9876543210": {"password": "ecoza", "name": "Deepak Raja"}
     }
 
 PAGES = ["🏠 Home", "📸 AI Scanner", "🗺️ Drop-off Map", "🚚 Super Pickup", "🎁 Rewards Store", "🏆 Champions Leaderboard", "📊 Impact Dashboard"]
@@ -242,7 +254,7 @@ if not st.session_state.authenticated:
             <div style="text-align: center; margin-bottom: 20px;">
                 <div style="font-size: 55px; margin-bottom: 5px;">🌍</div>
                 <h1 style="color: #065f46; font-size: 40px; margin-bottom: 4px;">Welcome to Ecoza Kids!</h1>
-                <p style="color: #64748b; font-weight: 700;">Please log in with your email to start your recycling mission.</p>
+                <p style="color: #64748b; font-weight: 700;">Please log in with your user email or mobile number.</p>
             </div>
             """,
             unsafe_allow_html=True
@@ -252,41 +264,43 @@ if not st.session_state.authenticated:
 
         with auth_tab1:
             with st.form("login_form"):
-                login_email = st.text_input("Student / School Email", placeholder="student@ecoza.com")
+                login_id = st.text_input("User Email or Mobile Number", placeholder="name@example.com or 9876543210")
                 login_password = st.text_input("Password", type="password", placeholder="••••••••")
                 btn_login = st.form_submit_button("🚀 Enter Ecoza Adventure", use_container_width=True)
 
                 if btn_login:
-                    if not login_email or not login_password:
-                        st.error("Please enter both email and password!")
-                    elif login_email in st.session_state.registered_users and st.session_state.registered_users[login_email]["password"] == login_password:
+                    cleaned_id = login_id.strip()
+                    if not cleaned_id or not login_password:
+                        st.error("Please enter both your User Email/Mobile Number and password!")
+                    elif cleaned_id in st.session_state.registered_users and st.session_state.registered_users[cleaned_id]["password"] == login_password:
                         st.session_state.authenticated = True
-                        st.session_state.user_email = login_email
-                        st.session_state.username = st.session_state.registered_users[login_email]["name"]
+                        st.session_state.user_identifier = cleaned_id
+                        st.session_state.username = st.session_state.registered_users[cleaned_id]["name"]
                         st.balloons()
                         st.rerun()
                     else:
-                        st.error("Incorrect email or password! (Demo: student@ecoza.com / pass: ecoza)")
+                        st.error("Incorrect User Email/Mobile Number or password! (Demo: user@ecoza.com / pass: ecoza)")
 
         with auth_tab2:
             with st.form("signup_form"):
-                new_name = st.text_input("Student Name / Classroom", placeholder="Aarav (Class 5A)")
-                new_email = st.text_input("Student / School Email", placeholder="aarav@school.edu")
+                new_name = st.text_input("Full Name", placeholder="Deepak Raja")
+                new_id = st.text_input("User Email or Mobile Number", placeholder="name@example.com or 9876543210")
                 new_password = st.text_input("Create Password", type="password", placeholder="••••••••")
                 btn_signup = st.form_submit_button("⭐ Sign Up & Become A Hero", use_container_width=True)
 
                 if btn_signup:
-                    if not new_name or not new_email or not new_password:
+                    cleaned_new_id = new_id.strip()
+                    if not new_name or not cleaned_new_id or not new_password:
                         st.error("Please fill in all details!")
-                    elif new_email in st.session_state.registered_users:
-                        st.warning("This email is already registered! Please log in.")
+                    elif cleaned_new_id in st.session_state.registered_users:
+                        st.warning("This User Email or Mobile Number is already registered! Please log in.")
                     else:
-                        st.session_state.registered_users[new_email] = {
+                        st.session_state.registered_users[cleaned_new_id] = {
                             "password": new_password,
                             "name": new_name
                         }
                         st.session_state.authenticated = True
-                        st.session_state.user_email = new_email
+                        st.session_state.user_identifier = cleaned_new_id
                         st.session_state.username = new_name
                         st.balloons()
                         st.success("Account created successfully! Welcome aboard.")
@@ -321,10 +335,10 @@ with head_col3:
     with col_out:
         if st.button("🚪 Logout", key="logout_btn"):
             st.session_state.authenticated = False
-            st.session_state.user_email = ""
+            st.session_state.user_identifier = ""
             st.rerun()
 
-st.caption(f"Logged in as: **{st.session_state.username}** ({st.session_state.user_email})")
+st.caption(f"Logged in as: **{st.session_state.username}** ({st.session_state.user_identifier})")
 st.markdown("<hr style='margin-top: 2px; margin-bottom: 22px; border: 0; border-top: 2px dashed #a7f3d0;'>", unsafe_allow_html=True)
 
 # ----------------- 1. Home / Hero Screen -----------------
@@ -497,7 +511,7 @@ elif st.session_state.current_page == "🚚 Super Pickup":
         pickup_address = st.text_area("School or Home Address", placeholder="Class 6A, XYZ School, Chennai")
         waste_items = st.multiselect("What are you recycling?", list(RATES.keys()), default=["🥤 Plastic Bottles", "📚 Paper & Notebooks"])
         pickup_date = st.date_input("Preferred Date", min_value=datetime.date.today())
-        phone = st.text_input("Teacher / Parent Mobile Number", placeholder="+91 9876543210")
+        phone = st.text_input("Contact Mobile Number", placeholder="+91 9876543210")
 
         submit_booking = st.form_submit_button("🚛 Send The Eco-Van!")
         if submit_booking:
