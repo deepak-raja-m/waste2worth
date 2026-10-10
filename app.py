@@ -66,7 +66,7 @@ st.markdown(
         font-size: 24px !important;
     }
 
-    /* Streamlit Tabs (Login & Classifier) */
+    /* Streamlit Tabs */
     button[data-baseweb="tab"] {
         font-size: 22px !important;
         font-family: 'Fredoka', cursive !important;
@@ -298,9 +298,14 @@ if not st.session_state.authenticated:
     with col_l2:
         st.markdown(
             """
-            <div style="text-align: center; margin-bottom: 28px;">
-                <div style="font-size: 80px; margin-bottom: 12px; line-height: 1;">🌱</div>
-                <h1 style="color: #064e3b; font-size: 54px; margin-bottom: 8px;">Welcome to Ecoza</h1>
+            <div style="text-align: center; margin-bottom: 26px;">
+                <div style="display: inline-flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 6px;">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="#00aa6c" style="display: block;">
+                        <path d="M2 22h20c0-5.52-4.48-10-10-10v-3.17c2.83-.48 5-2.94 5-5.83 0-.55-.45-1-1-1s-1 .45-1 1c0 2.21-1.79 4-4 4-1.1 0-2.1-.45-2.83-1.17-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41C7.79 8.44 9 9.61 10 9.87V12C4.48 12 0 16.48 0 22h2z"/>
+                    </svg>
+                    <span style="font-family: 'Fredoka', cursive, sans-serif; font-size: 58px; font-weight: 700; color: #00aa6c; letter-spacing: -0.5px;">Ecoza</span>
+                </div>
+                <h1 style="color: #064e3b; font-size: 42px; margin-top: 4px; margin-bottom: 6px;">Welcome to Ecoza</h1>
                 <p style="color: #365342; font-weight: 600; font-size: 22px;">Log in with your email or mobile number to continue.</p>
             </div>
             """,
