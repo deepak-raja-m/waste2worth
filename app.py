@@ -12,7 +12,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# ----------------- Vibrant Nature & Eco-Friendly Theme CSS -----------------
+# ----------------- Vibrant Nature Theme with Scaled-Up Typography -----------------
 st.markdown(
     """
     <style>
@@ -29,21 +29,43 @@ st.markdown(
         font-family: 'Plus Jakarta Sans', sans-serif !important;
     }
     
+    /* Scaled Global Body Typography */
     .stApp p, .stApp span, .stApp label, .stApp div {
         color: #143522;
         font-family: 'Plus Jakarta Sans', sans-serif;
-        font-size: 15px;
+        font-size: 18px;
+        line-height: 1.6;
     }
 
-    h1, h2, h3, h4 {
+    /* Scaled Headings */
+    h1 {
         font-family: 'Fredoka', cursive, sans-serif !important;
         letter-spacing: 0.3px;
         color: #0f4a25 !important;
+        font-size: 50px !important;
     }
 
-    /* Ecoza Leaf Logo */
+    h2 {
+        font-family: 'Fredoka', cursive, sans-serif !important;
+        color: #0f4a25 !important;
+        font-size: 34px !important;
+    }
+
+    h3 {
+        font-family: 'Fredoka', cursive, sans-serif !important;
+        color: #0f4a25 !important;
+        font-size: 25px !important;
+    }
+
+    h4 {
+        font-family: 'Fredoka', cursive, sans-serif !important;
+        color: #0f4a25 !important;
+        font-size: 21px !important;
+    }
+
+    /* Scaled Ecoza Leaf Logo */
     .brand-logo {
-        font-size: 32px;
+        font-size: 36px;
         font-family: 'Fredoka', cursive, sans-serif;
         font-weight: 700;
         background: linear-gradient(135deg, #059669 0%, #10b981 50%, #047857 100%);
@@ -51,41 +73,42 @@ st.markdown(
         -webkit-text-fill-color: transparent;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 10px;
     }
 
-    /* Honeycomb Solar Gold Reward Badge */
+    /* Scaled Reward Badge */
     .badge-points {
         background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
         color: #ffffff !important;
         font-family: 'Fredoka', cursive;
         font-weight: 700;
-        padding: 8px 20px;
+        padding: 10px 24px;
         border-radius: 9999px;
-        font-size: 16px;
+        font-size: 18px;
         box-shadow: 0 4px 14px rgba(217, 119, 6, 0.3);
         border: 2px solid #fef3c7;
         display: inline-block;
     }
 
-    /* Fresh Green Navigation Pill Bar */
+    /* Scaled Navigation Pill Bar */
     div[role="radiogroup"] {
         background: #ffffff;
-        padding: 7px 12px;
+        padding: 8px 16px;
         border-radius: 9999px;
         border: 2px solid #a7f3d0;
         box-shadow: 0 4px 18px rgba(16, 185, 129, 0.12);
         display: flex;
         justify-content: center;
-        gap: 6px;
+        gap: 8px;
     }
 
     div[role="radiogroup"] label {
-        padding: 6px 14px !important;
+        padding: 8px 18px !important;
         border-radius: 9999px !important;
         font-weight: 700 !important;
         font-family: 'Fredoka', cursive !important;
         color: #065f46 !important;
+        font-size: 17px !important;
         transition: all 0.2s ease;
     }
 
@@ -93,44 +116,53 @@ st.markdown(
         background: #d1fae5 !important;
     }
 
-    /* Frosted Eco White Containers */
+    /* Scaled Containers */
     [data-testid="stForm"], [data-testid="stMetric"], .stTable {
         background: #ffffff !important;
-        padding: 24px !important;
-        border-radius: 20px !important;
+        padding: 28px !important;
+        border-radius: 22px !important;
         box-shadow: 0 8px 24px rgba(5, 150, 105, 0.08) !important;
         border: 2px solid #bbf7d0 !important;
     }
 
-    /* High-contrast form text inputs */
+    /* Larger Form Inputs */
     input, select, textarea, div[data-baseweb="input"], div[data-baseweb="base-input"] {
         background-color: #ffffff !important;
         color: #0f381f !important;
         border-color: #86efac !important;
-        border-radius: 10px !important;
+        border-radius: 12px !important;
+        font-size: 18px !important;
+        padding: 10px 14px !important;
     }
 
     input::placeholder {
         color: #94a3b8 !important;
+        font-size: 17px !important;
     }
 
+    /* Larger Metric Text */
     div[data-testid="stMetricValue"] {
         color: #059669 !important;
         font-family: 'Fredoka', cursive !important;
         font-weight: 700 !important;
-        font-size: 34px !important;
+        font-size: 42px !important;
     }
 
-    /* Vibrant Eco Action Buttons */
+    div[data-testid="stMetricLabel"] * {
+        font-size: 19px !important;
+        font-weight: 600 !important;
+    }
+
+    /* Larger Action Buttons */
     .stButton>button, div[data-testid="stForm"] button {
         background: linear-gradient(135deg, #059669 0%, #10b981 100%) !important;
         color: #ffffff !important;
         font-family: 'Fredoka', cursive !important;
-        font-size: 17px !important;
+        font-size: 19px !important;
         font-weight: 700 !important;
-        border-radius: 16px !important;
+        border-radius: 18px !important;
         border: 2px solid #6ee7b7 !important;
-        padding: 10px 24px !important;
+        padding: 12px 28px !important;
         box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25) !important;
         transition: transform 0.15s ease;
     }
@@ -141,16 +173,17 @@ st.markdown(
         color: #ffffff !important;
     }
 
-    /* Clean Crisp Uploader Area */
+    /* Scaled Uploader Area */
     [data-testid="stFileUploader"] {
         background: #ffffff !important;
         border: 2px dashed #059669 !important;
-        border-radius: 18px !important;
-        padding: 24px !important;
+        border-radius: 20px !important;
+        padding: 30px !important;
     }
 
     [data-testid="stFileUploader"] * {
         background-color: transparent !important;
+        font-size: 17px !important;
     }
     </style>
     """,
@@ -254,10 +287,10 @@ if not st.session_state.authenticated:
     with col_l2:
         st.markdown(
             """
-            <div style="text-align: center; margin-bottom: 20px;">
-                <div style="font-size: 55px; margin-bottom: 5px;">🌱</div>
-                <h1 style="color: #065f46; font-size: 38px; margin-bottom: 4px;">Welcome to Ecoza</h1>
-                <p style="color: #4b6354; font-weight: 600;">Log in with your email or mobile number to continue.</p>
+            <div style="text-align: center; margin-bottom: 24px;">
+                <div style="font-size: 65px; margin-bottom: 8px;">🌱</div>
+                <h1 style="color: #065f46; font-size: 44px; margin-bottom: 6px;">Welcome to Ecoza</h1>
+                <p style="color: #4b6354; font-weight: 600; font-size: 19px;">Log in with your email or mobile number to continue.</p>
             </div>
             """,
             unsafe_allow_html=True
@@ -341,17 +374,17 @@ with head_col3:
             st.rerun()
 
 st.caption(f"Logged in: **{st.session_state.username}** ({st.session_state.user_identifier})")
-st.markdown("<hr style='margin-top: 2px; margin-bottom: 22px; border: 0; border-top: 2px dashed #a7f3d0;'>", unsafe_allow_html=True)
+st.markdown("<hr style='margin-top: 4px; margin-bottom: 24px; border: 0; border-top: 2px dashed #a7f3d0;'>", unsafe_allow_html=True)
 
 # ----------------- 1. Home / Hero Screen -----------------
 if st.session_state.current_page == "🏠 Home":
     st.markdown(
         f"""
-        <div style="text-align: center; max-width: 820px; margin: 0 auto; padding: 15px 0 20px 0;">
-            <div style="background: #dcfce7; color: #15803d; font-weight: 800; font-family: 'Fredoka'; padding: 6px 18px; border-radius: 9999px; display: inline-block; font-size: 14px; margin-bottom: 12px; border: 2px solid #86efac;">
+        <div style="text-align: center; max-width: 860px; margin: 0 auto; padding: 20px 0 24px 0;">
+            <div style="background: #dcfce7; color: #15803d; font-weight: 800; font-family: 'Fredoka'; padding: 8px 22px; border-radius: 9999px; display: inline-block; font-size: 16px; margin-bottom: 14px; border: 2px solid #86efac;">
                 🌍 CIRCULAR LIVING & REWARDS 🌿
             </div>
-            <h1 style="font-size: 44px; color: #064e3b; line-height: 1.2; margin-bottom: 10px;">
+            <h1 style="font-size: 50px; color: #064e3b; line-height: 1.2; margin-bottom: 12px;">
                 Turn Everyday Waste Into <span style="background: linear-gradient(135deg, #059669, #0284c7); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">EcoPoints!</span>
             </h1>
         </div>
@@ -371,10 +404,10 @@ if st.session_state.current_page == "🏠 Home":
     with col1:
         st.markdown(
             """
-            <div style="background: #ffffff; padding: 22px; border-radius: 18px; border: 2px solid #bbf7d0; text-align: center; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.05);">
-                <div style="font-size: 40px; margin-bottom: 8px;">📷</div>
-                <h3 style="color: #065f46; margin: 0 0 6px 0;">AI Waste Scanner</h3>
-                <p style="color: #4b6354; font-size: 14px; margin: 0;">Upload or snap photos to identify materials and calculate points per 1,000 grams.</p>
+            <div style="background: #ffffff; padding: 26px; border-radius: 20px; border: 2px solid #bbf7d0; text-align: center; box-shadow: 0 4px 14px rgba(5, 150, 105, 0.05);">
+                <div style="font-size: 46px; margin-bottom: 10px;">📷</div>
+                <h3 style="color: #065f46; margin: 0 0 8px 0; font-size: 24px;">AI Waste Scanner</h3>
+                <p style="color: #4b6354; font-size: 17px; margin: 0; line-height: 1.5;">Upload or snap photos to identify materials and calculate points per 1,000 grams.</p>
             </div>
             """,
             unsafe_allow_html=True
@@ -382,10 +415,10 @@ if st.session_state.current_page == "🏠 Home":
     with col2:
         st.markdown(
             """
-            <div style="background: #ffffff; padding: 22px; border-radius: 18px; border: 2px solid #bbf7d0; text-align: center; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.05);">
-                <div style="font-size: 40px; margin-bottom: 8px;">🚚</div>
-                <h3 style="color: #065f46; margin: 0 0 6px 0;">Doorstep Collection</h3>
-                <p style="color: #4b6354; font-size: 14px; margin: 0;">Schedule doorstep pickups with certified recycling partners.</p>
+            <div style="background: #ffffff; padding: 26px; border-radius: 20px; border: 2px solid #bbf7d0; text-align: center; box-shadow: 0 4px 14px rgba(5, 150, 105, 0.05);">
+                <div style="font-size: 46px; margin-bottom: 10px;">🚚</div>
+                <h3 style="color: #065f46; margin: 0 0 8px 0; font-size: 24px;">Doorstep Collection</h3>
+                <p style="color: #4b6354; font-size: 17px; margin: 0; line-height: 1.5;">Schedule doorstep pickups with certified recycling partners.</p>
             </div>
             """,
             unsafe_allow_html=True
@@ -393,10 +426,10 @@ if st.session_state.current_page == "🏠 Home":
     with col3:
         st.markdown(
             """
-            <div style="background: #ffffff; padding: 22px; border-radius: 18px; border: 2px solid #bbf7d0; text-align: center; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.05);">
-                <div style="font-size: 40px; margin-bottom: 8px;">🎁</div>
-                <h3 style="color: #065f46; margin: 0 0 6px 0;">Community Rewards</h3>
-                <p style="color: #4b6354; font-size: 14px; margin: 0;">Trade accumulated points for plant saplings, book coupons, and vouchers.</p>
+            <div style="background: #ffffff; padding: 26px; border-radius: 20px; border: 2px solid #bbf7d0; text-align: center; box-shadow: 0 4px 14px rgba(5, 150, 105, 0.05);">
+                <div style="font-size: 46px; margin-bottom: 10px;">🎁</div>
+                <h3 style="color: #065f46; margin: 0 0 8px 0; font-size: 24px;">Community Rewards</h3>
+                <p style="color: #4b6354; font-size: 17px; margin: 0; line-height: 1.5;">Trade accumulated points for plant saplings, book coupons, and vouchers.</p>
             </div>
             """,
             unsafe_allow_html=True
