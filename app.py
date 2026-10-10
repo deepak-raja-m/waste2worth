@@ -6,7 +6,7 @@ from PIL import Image
 
 # ----------------- Page Configuration -----------------
 st.set_page_config(
-    page_title="Ecoza Kids - Super Recycling Adventure",
+    page_title="Ecoza - Super Recycling Adventure",
     page_icon="🌍",
     layout="wide",
     initial_sidebar_state="collapsed"
@@ -40,7 +40,7 @@ st.markdown(
         letter-spacing: 0.5px;
     }
 
-    /* Chunky Kid-Friendly Logo */
+    /* Chunky Logo */
     .brand-logo {
         font-size: 32px;
         font-family: 'Fredoka', cursive, sans-serif;
@@ -253,7 +253,7 @@ if not st.session_state.authenticated:
             """
             <div style="text-align: center; margin-bottom: 20px;">
                 <div style="font-size: 55px; margin-bottom: 5px;">🌍</div>
-                <h1 style="color: #065f46; font-size: 40px; margin-bottom: 4px;">Welcome to Ecoza Kids!</h1>
+                <h1 style="color: #065f46; font-size: 40px; margin-bottom: 4px;">Welcome to Ecoza!</h1>
                 <p style="color: #64748b; font-weight: 700;">Please log in with your user email or mobile number.</p>
             </div>
             """,
@@ -314,7 +314,7 @@ if not st.session_state.authenticated:
 head_col1, head_col2, head_col3 = st.columns([1.5, 4.3, 1.8], vertical_alignment="center")
 
 with head_col1:
-    st.markdown('<div class="brand-logo">🌱 Ecoza Kids!</div>', unsafe_allow_html=True)
+    st.markdown('<div class="brand-logo">🌱 Ecoza</div>', unsafe_allow_html=True)
 
 with head_col2:
     current_index = PAGES.index(st.session_state.current_page) if st.session_state.current_page in PAGES else 0
