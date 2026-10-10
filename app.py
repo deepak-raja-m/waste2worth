@@ -12,7 +12,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# ----------------- Vibrant Nature Theme with Scaled-Up Typography -----------------
+# ----------------- Vibrant Nature Theme with Extra Large Typography -----------------
 st.markdown(
     """
     <style>
@@ -29,43 +29,54 @@ st.markdown(
         font-family: 'Plus Jakarta Sans', sans-serif !important;
     }
     
-    /* Scaled Global Body Typography */
+    /* Global Body Typography */
     .stApp p, .stApp span, .stApp label, .stApp div {
         color: #143522;
         font-family: 'Plus Jakarta Sans', sans-serif;
-        font-size: 18px;
+        font-size: 20px;
         line-height: 1.6;
     }
 
-    /* Scaled Headings */
+    /* Extra Large Headings Across All Screens */
     h1 {
         font-family: 'Fredoka', cursive, sans-serif !important;
         letter-spacing: 0.3px;
-        color: #0f4a25 !important;
-        font-size: 50px !important;
+        color: #064e3b !important;
+        font-size: 54px !important;
+        margin-bottom: 14px !important;
     }
 
     h2 {
         font-family: 'Fredoka', cursive, sans-serif !important;
-        color: #0f4a25 !important;
-        font-size: 34px !important;
+        color: #064e3b !important;
+        font-size: 40px !important;
+        margin-top: 18px !important;
+        margin-bottom: 12px !important;
     }
 
     h3 {
         font-family: 'Fredoka', cursive, sans-serif !important;
-        color: #0f4a25 !important;
-        font-size: 25px !important;
+        color: #065f46 !important;
+        font-size: 28px !important;
     }
 
     h4 {
         font-family: 'Fredoka', cursive, sans-serif !important;
-        color: #0f4a25 !important;
-        font-size: 21px !important;
+        color: #065f46 !important;
+        font-size: 24px !important;
     }
 
-    /* Scaled Ecoza Leaf Logo */
+    /* Streamlit Tabs (Login & Classifier) */
+    button[data-baseweb="tab"] {
+        font-size: 22px !important;
+        font-family: 'Fredoka', cursive !important;
+        font-weight: 700 !important;
+        padding: 10px 24px !important;
+    }
+
+    /* Brand Logo */
     .brand-logo {
-        font-size: 36px;
+        font-size: 40px;
         font-family: 'Fredoka', cursive, sans-serif;
         font-weight: 700;
         background: linear-gradient(135deg, #059669 0%, #10b981 50%, #047857 100%);
@@ -73,42 +84,42 @@ st.markdown(
         -webkit-text-fill-color: transparent;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 12px;
     }
 
-    /* Scaled Reward Badge */
+    /* Reward Badge */
     .badge-points {
         background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
         color: #ffffff !important;
         font-family: 'Fredoka', cursive;
         font-weight: 700;
-        padding: 10px 24px;
+        padding: 12px 28px;
         border-radius: 9999px;
-        font-size: 18px;
+        font-size: 20px;
         box-shadow: 0 4px 14px rgba(217, 119, 6, 0.3);
         border: 2px solid #fef3c7;
         display: inline-block;
     }
 
-    /* Scaled Navigation Pill Bar */
+    /* Navigation Pill Bar */
     div[role="radiogroup"] {
         background: #ffffff;
-        padding: 8px 16px;
+        padding: 10px 18px;
         border-radius: 9999px;
         border: 2px solid #a7f3d0;
         box-shadow: 0 4px 18px rgba(16, 185, 129, 0.12);
         display: flex;
         justify-content: center;
-        gap: 8px;
+        gap: 10px;
     }
 
     div[role="radiogroup"] label {
-        padding: 8px 18px !important;
+        padding: 10px 20px !important;
         border-radius: 9999px !important;
         font-weight: 700 !important;
         font-family: 'Fredoka', cursive !important;
         color: #065f46 !important;
-        font-size: 17px !important;
+        font-size: 19px !important;
         transition: all 0.2s ease;
     }
 
@@ -116,54 +127,54 @@ st.markdown(
         background: #d1fae5 !important;
     }
 
-    /* Scaled Containers */
+    /* Card Containers */
     [data-testid="stForm"], [data-testid="stMetric"], .stTable {
         background: #ffffff !important;
-        padding: 28px !important;
-        border-radius: 22px !important;
+        padding: 32px !important;
+        border-radius: 24px !important;
         box-shadow: 0 8px 24px rgba(5, 150, 105, 0.08) !important;
         border: 2px solid #bbf7d0 !important;
     }
 
-    /* Larger Form Inputs */
+    /* Large Form Inputs */
     input, select, textarea, div[data-baseweb="input"], div[data-baseweb="base-input"] {
         background-color: #ffffff !important;
         color: #0f381f !important;
         border-color: #86efac !important;
-        border-radius: 12px !important;
-        font-size: 18px !important;
-        padding: 10px 14px !important;
+        border-radius: 14px !important;
+        font-size: 20px !important;
+        padding: 12px 16px !important;
     }
 
     input::placeholder {
         color: #94a3b8 !important;
-        font-size: 17px !important;
+        font-size: 19px !important;
     }
 
-    /* Larger Metric Text */
+    /* Large Metric Text */
     div[data-testid="stMetricValue"] {
         color: #059669 !important;
         font-family: 'Fredoka', cursive !important;
         font-weight: 700 !important;
-        font-size: 42px !important;
+        font-size: 50px !important;
     }
 
     div[data-testid="stMetricLabel"] * {
-        font-size: 19px !important;
-        font-weight: 600 !important;
+        font-size: 22px !important;
+        font-weight: 700 !important;
     }
 
-    /* Larger Action Buttons */
+    /* Large Action Buttons */
     .stButton>button, div[data-testid="stForm"] button {
         background: linear-gradient(135deg, #059669 0%, #10b981 100%) !important;
         color: #ffffff !important;
         font-family: 'Fredoka', cursive !important;
-        font-size: 19px !important;
+        font-size: 22px !important;
         font-weight: 700 !important;
-        border-radius: 18px !important;
+        border-radius: 20px !important;
         border: 2px solid #6ee7b7 !important;
-        padding: 12px 28px !important;
-        box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25) !important;
+        padding: 14px 34px !important;
+        box-shadow: 0 6px 18px rgba(5, 150, 105, 0.28) !important;
         transition: transform 0.15s ease;
     }
 
@@ -173,17 +184,17 @@ st.markdown(
         color: #ffffff !important;
     }
 
-    /* Scaled Uploader Area */
+    /* Large File Uploader Box */
     [data-testid="stFileUploader"] {
         background: #ffffff !important;
         border: 2px dashed #059669 !important;
-        border-radius: 20px !important;
-        padding: 30px !important;
+        border-radius: 22px !important;
+        padding: 34px !important;
     }
 
     [data-testid="stFileUploader"] * {
         background-color: transparent !important;
-        font-size: 17px !important;
+        font-size: 19px !important;
     }
     </style>
     """,
@@ -281,16 +292,16 @@ RECYCLING_CENTERS = [
 
 # ----------------- LOGIN GATEWAY -----------------
 if not st.session_state.authenticated:
-    st.markdown("<br><br>", unsafe_allow_html=True)
-    col_l1, col_l2, col_l3 = st.columns([1.2, 2, 1.2])
+    st.markdown("<br>", unsafe_allow_html=True)
+    col_l1, col_l2, col_l3 = st.columns([1, 2.2, 1])
 
     with col_l2:
         st.markdown(
             """
-            <div style="text-align: center; margin-bottom: 24px;">
-                <div style="font-size: 65px; margin-bottom: 8px;">🌱</div>
-                <h1 style="color: #065f46; font-size: 44px; margin-bottom: 6px;">Welcome to Ecoza</h1>
-                <p style="color: #4b6354; font-weight: 600; font-size: 19px;">Log in with your email or mobile number to continue.</p>
+            <div style="text-align: center; margin-bottom: 28px;">
+                <div style="font-size: 80px; margin-bottom: 12px; line-height: 1;">🌱</div>
+                <h1 style="color: #064e3b; font-size: 54px; margin-bottom: 8px;">Welcome to Ecoza</h1>
+                <p style="color: #365342; font-weight: 600; font-size: 22px;">Log in with your email or mobile number to continue.</p>
             </div>
             """,
             unsafe_allow_html=True
@@ -373,18 +384,18 @@ with head_col3:
             st.session_state.user_identifier = ""
             st.rerun()
 
-st.caption(f"Logged in: **{st.session_state.username}** ({st.session_state.user_identifier})")
-st.markdown("<hr style='margin-top: 4px; margin-bottom: 24px; border: 0; border-top: 2px dashed #a7f3d0;'>", unsafe_allow_html=True)
+st.markdown(f"<p style='font-size: 18px; color: #476853; margin-top: -6px;'>Logged in: <b>{st.session_state.username}</b> ({st.session_state.user_identifier})</p>", unsafe_allow_html=True)
+st.markdown("<hr style='margin-top: 4px; margin-bottom: 26px; border: 0; border-top: 2px dashed #a7f3d0;'>", unsafe_allow_html=True)
 
 # ----------------- 1. Home / Hero Screen -----------------
 if st.session_state.current_page == "🏠 Home":
     st.markdown(
         f"""
-        <div style="text-align: center; max-width: 860px; margin: 0 auto; padding: 20px 0 24px 0;">
-            <div style="background: #dcfce7; color: #15803d; font-weight: 800; font-family: 'Fredoka'; padding: 8px 22px; border-radius: 9999px; display: inline-block; font-size: 16px; margin-bottom: 14px; border: 2px solid #86efac;">
+        <div style="text-align: center; max-width: 920px; margin: 0 auto; padding: 20px 0 26px 0;">
+            <div style="background: #dcfce7; color: #15803d; font-weight: 800; font-family: 'Fredoka'; padding: 10px 26px; border-radius: 9999px; display: inline-block; font-size: 18px; margin-bottom: 16px; border: 2px solid #86efac;">
                 🌍 CIRCULAR LIVING & REWARDS 🌿
             </div>
-            <h1 style="font-size: 50px; color: #064e3b; line-height: 1.2; margin-bottom: 12px;">
+            <h1 style="font-size: 58px; color: #064e3b; line-height: 1.18; margin-bottom: 14px;">
                 Turn Everyday Waste Into <span style="background: linear-gradient(135deg, #059669, #0284c7); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">EcoPoints!</span>
             </h1>
         </div>
@@ -392,7 +403,7 @@ if st.session_state.current_page == "🏠 Home":
         unsafe_allow_html=True
     )
 
-    c_btn1, c_btn2, c_btn3 = st.columns([2.3, 1.4, 2.3])
+    c_btn1, c_btn2, c_btn3 = st.columns([2.2, 1.6, 2.2])
     with c_btn2:
         if st.button("✨ Scan An Item Now!", use_container_width=True):
             st.session_state.current_page = "📸 AI Scanner"
@@ -404,10 +415,10 @@ if st.session_state.current_page == "🏠 Home":
     with col1:
         st.markdown(
             """
-            <div style="background: #ffffff; padding: 26px; border-radius: 20px; border: 2px solid #bbf7d0; text-align: center; box-shadow: 0 4px 14px rgba(5, 150, 105, 0.05);">
-                <div style="font-size: 46px; margin-bottom: 10px;">📷</div>
-                <h3 style="color: #065f46; margin: 0 0 8px 0; font-size: 24px;">AI Waste Scanner</h3>
-                <p style="color: #4b6354; font-size: 17px; margin: 0; line-height: 1.5;">Upload or snap photos to identify materials and calculate points per 1,000 grams.</p>
+            <div style="background: #ffffff; padding: 30px; border-radius: 22px; border: 2px solid #bbf7d0; text-align: center; box-shadow: 0 4px 14px rgba(5, 150, 105, 0.05);">
+                <div style="font-size: 52px; margin-bottom: 10px;">📷</div>
+                <h3 style="color: #065f46; margin: 0 0 10px 0; font-size: 28px;">AI Waste Scanner</h3>
+                <p style="color: #4b6354; font-size: 19px; margin: 0; line-height: 1.5;">Upload or snap photos to identify materials and calculate points per 1,000 grams.</p>
             </div>
             """,
             unsafe_allow_html=True
@@ -415,10 +426,10 @@ if st.session_state.current_page == "🏠 Home":
     with col2:
         st.markdown(
             """
-            <div style="background: #ffffff; padding: 26px; border-radius: 20px; border: 2px solid #bbf7d0; text-align: center; box-shadow: 0 4px 14px rgba(5, 150, 105, 0.05);">
-                <div style="font-size: 46px; margin-bottom: 10px;">🚚</div>
-                <h3 style="color: #065f46; margin: 0 0 8px 0; font-size: 24px;">Doorstep Collection</h3>
-                <p style="color: #4b6354; font-size: 17px; margin: 0; line-height: 1.5;">Schedule doorstep pickups with certified recycling partners.</p>
+            <div style="background: #ffffff; padding: 30px; border-radius: 22px; border: 2px solid #bbf7d0; text-align: center; box-shadow: 0 4px 14px rgba(5, 150, 105, 0.05);">
+                <div style="font-size: 52px; margin-bottom: 10px;">🚚</div>
+                <h3 style="color: #065f46; margin: 0 0 10px 0; font-size: 28px;">Doorstep Collection</h3>
+                <p style="color: #4b6354; font-size: 19px; margin: 0; line-height: 1.5;">Schedule doorstep pickups with certified recycling partners.</p>
             </div>
             """,
             unsafe_allow_html=True
@@ -426,10 +437,10 @@ if st.session_state.current_page == "🏠 Home":
     with col3:
         st.markdown(
             """
-            <div style="background: #ffffff; padding: 26px; border-radius: 20px; border: 2px solid #bbf7d0; text-align: center; box-shadow: 0 4px 14px rgba(5, 150, 105, 0.05);">
-                <div style="font-size: 46px; margin-bottom: 10px;">🎁</div>
-                <h3 style="color: #065f46; margin: 0 0 8px 0; font-size: 24px;">Community Rewards</h3>
-                <p style="color: #4b6354; font-size: 17px; margin: 0; line-height: 1.5;">Trade accumulated points for plant saplings, book coupons, and vouchers.</p>
+            <div style="background: #ffffff; padding: 30px; border-radius: 22px; border: 2px solid #bbf7d0; text-align: center; box-shadow: 0 4px 14px rgba(5, 150, 105, 0.05);">
+                <div style="font-size: 52px; margin-bottom: 10px;">🎁</div>
+                <h3 style="color: #065f46; margin: 0 0 10px 0; font-size: 28px;">Community Rewards</h3>
+                <p style="color: #4b6354; font-size: 19px; margin: 0; line-height: 1.5;">Trade accumulated points for plant saplings, book coupons, and vouchers.</p>
             </div>
             """,
             unsafe_allow_html=True
@@ -446,7 +457,7 @@ if st.session_state.current_page == "🏠 Home":
 # ----------------- 2. AI Scanner & Classifier -----------------
 elif st.session_state.current_page == "📸 AI Scanner":
     st.title("📸 AI Waste Scanner & Classifier")
-    st.write("Upload an image or take a photo to detect material category and log EcoPoints.")
+    st.markdown("<p style='font-size: 22px; color: #365342;'>Upload an image or take a photo to detect material category and log EcoPoints.</p>", unsafe_allow_html=True)
 
     tab1, tab2 = st.tabs(["📁 Upload Item Photo", "📷 Snap With Camera"])
     uploaded_image = None
@@ -475,8 +486,8 @@ elif st.session_state.current_page == "📸 AI Scanner":
 
             st.balloons()
             st.success(f"### 🎉 Classified: **{detected_category}**")
-            st.write(f"Confidence score: **{confidence_score}%**")
-            st.write(f"Rate: **{RATES[detected_category]} EcoPoints per 1,000 grams**")
+            st.markdown(f"<p style='font-size: 22px;'>Confidence score: <b>{confidence_score}%</b></p>", unsafe_allow_html=True)
+            st.markdown(f"<p style='font-size: 22px;'>Rate: <b>{RATES[detected_category]} EcoPoints per 1,000 grams</b></p>", unsafe_allow_html=True)
 
     st.markdown("---")
     st.subheader("⚖️ Enter Estimated Weight (in Grams)")
@@ -516,7 +527,7 @@ elif st.session_state.current_page == "📸 AI Scanner":
 # ----------------- 3. Nearby Collection Centers (Map) -----------------
 elif st.session_state.current_page == "🗺️ Drop-off Map":
     st.title("🗺️ Ecoza Drop-Off Centers")
-    st.write("Find certified circular recycling drop-off centers across Chennai!")
+    st.markdown("<p style='font-size: 22px; color: #365342;'>Find certified circular recycling drop-off centers across Chennai!</p>", unsafe_allow_html=True)
 
     df_centers = pd.DataFrame(RECYCLING_CENTERS)
     st.map(df_centers[["lat", "lon"]], zoom=11)
@@ -537,7 +548,7 @@ elif st.session_state.current_page == "🗺️ Drop-off Map":
 # ----------------- 4. Doorstep Pickup -----------------
 elif st.session_state.current_page == "🚚 Super Pickup":
     st.title("🚚 Schedule Doorstep Pickup")
-    st.write("Book a verified Ecoza pickup partner directly to your address.")
+    st.markdown("<p style='font-size: 22px; color: #365342;'>Book a verified Ecoza pickup partner directly to your address.</p>", unsafe_allow_html=True)
 
     with st.form("pickup_form"):
         pickup_address = st.text_area("Address", placeholder="Door No, Street, Landmark, Chennai")
@@ -570,7 +581,7 @@ elif st.session_state.current_page == "🚚 Super Pickup":
 # ----------------- 5. Rewards Store -----------------
 elif st.session_state.current_page == "🎁 Rewards Store":
     st.title("🎁 Rewards Store")
-    st.write(f"Redeem points for eco-conscious rewards! Balance: **{st.session_state.ecopoints} EcoPoints**")
+    st.markdown(f"<p style='font-size: 22px; color: #365342;'>Redeem points for eco-conscious rewards! Balance: <b>{st.session_state.ecopoints} EcoPoints</b></p>", unsafe_allow_html=True)
 
     rewards_list = [
         {"title": "🌱 Plant A Sapling With Your Tag", "cost": 150, "desc": "A fruit sapling planted with your name tag!"},
@@ -606,7 +617,7 @@ elif st.session_state.current_page == "🎁 Rewards Store":
 # ----------------- 6. Champions Leaderboard -----------------
 elif st.session_state.current_page == "🏆 Champions Leaderboard":
     st.title("🏆 Community Leaderboard")
-    st.write("Top recyclers contributing to zero waste this week!")
+    st.markdown("<p style='font-size: 22px; color: #365342;'>Top recyclers contributing to zero waste this week!</p>", unsafe_allow_html=True)
 
     leaderboard = [
         {"Rank": "🥇 1st Place", "Contributor": "Class 8B (Little Flower School)", "Waste Saved": "44,000 g", "EcoPoints": 880},
@@ -620,7 +631,7 @@ elif st.session_state.current_page == "🏆 Champions Leaderboard":
 # ----------------- 7. User Dashboard -----------------
 elif st.session_state.current_page == "📊 Impact Dashboard":
     st.title("📊 Environmental Impact Dashboard")
-    st.write("Track your total diverted waste and carbon savings!")
+    st.markdown("<p style='font-size: 22px; color: #365342;'>Track your total diverted waste and carbon savings!</p>", unsafe_allow_html=True)
 
     total_dropoffs = len(st.session_state.waste_history)
     col1, col2, col3, col4 = st.columns(4)
